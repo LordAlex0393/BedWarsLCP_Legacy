@@ -1,0 +1,3 @@
+name: BedWarsLCP
+version: '1.0-SNAPSHOT'
+main: org.lordalex.bedwarslcp.BedWarsLCP
