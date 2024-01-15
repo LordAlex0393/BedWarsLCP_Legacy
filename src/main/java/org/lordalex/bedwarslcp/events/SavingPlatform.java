@@ -24,7 +24,6 @@ import java.util.UUID;
 public class SavingPlatform implements Listener {
     private final HashMap<UUID, Long> cooldownsMap;
     private final int COOLDOWN = 5000;
-    private List<Location> area;
 
     public SavingPlatform() {
         this.cooldownsMap = new HashMap<UUID, Long>();
@@ -33,6 +32,7 @@ public class SavingPlatform implements Listener {
 
     @EventHandler
     public void platformCreating(PlayerInteractEvent e) {
+        List<Location> area;
         Player p = e.getPlayer();
         if (!(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
         if (!(e.getItem().getType() == Material.BLAZE_ROD)) return;
@@ -97,12 +97,10 @@ public class SavingPlatform implements Listener {
     @EventHandler
     public void onFall(EntityDamageEvent e) {
         if (e.getCause() == EntityDamageEvent.DamageCause.FALL) {
-
             if(cooldownsMap.containsKey(e.getEntity().getUniqueId())
                     && System.currentTimeMillis() - cooldownsMap.get(e.getEntity().getUniqueId()) < 1000){
                 e.setCancelled(true);
             }
-
         }
     }
 
