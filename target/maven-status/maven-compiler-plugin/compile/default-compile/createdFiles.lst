@@ -1,7 +1,11 @@
 org\lordalex\bedwarslcp\events\TeleportationDust.class
 org\lordalex\bedwarslcp\events\SavingPlatform.class
 org\lordalex\bedwarslcp\events\TrackerGPS.class
+org\lordalex\bedwarslcp\BedWarsLCP$1.class
 org\lordalex\bedwarslcp\events\TeleportationDust$1.class
 org\lordalex\bedwarslcp\BedWarsLCP.class
 org\lordalex\bedwarslcp\commands\StartCommand.class
 org\lordalex\bedwarslcp\events\SavingPlatform$1.class
+org\lordalex\bedwarslcp\events\OpenTrader.class
+org\lordalex\bedwarslcp\utils\ColorUtil.class
+org\lordalex\bedwarslcp\utils\Trader.class

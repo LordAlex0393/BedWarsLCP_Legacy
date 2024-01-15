@@ -3,4 +3,6 @@ version: '1.0-SNAPSHOT'
 main: org.lordalex.bedwarslcp.BedWarsLCP
 commands:
   bw:
-    usage: /bw <arg>
+    start:
+    kit:
+    set:
