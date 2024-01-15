@@ -33,13 +33,30 @@ public class Trader {
         sandstoneStack.setItemMeta(sandstoneMeta);
 
         inv.setItem(0, sandstoneStack);
+
+        ItemStack armorStack = new ItemStack(Material.IRON_CHESTPLATE, 1);
+        ItemMeta armorMeta = armorStack.getItemMeta();
+        armorMeta.setDisplayName(ColorUtil.getMessage("&l&bБроня"));
+        List<String> armorList = new ArrayList<>();
+        armorList.add(ColorUtil.getMessage("&e- &7Железный сет"));
+        armorList.add(ColorUtil.getMessage("&e- &aЖелезка уровень 1"));
+        armorList.add(ColorUtil.getMessage("&e- &aЖелезка уровень 2"));
+        armorList.add(ColorUtil.getMessage("&e- &7Алмазный сет"));
+        armorList.add(ColorUtil.getMessage("&e- &fАлмазка уровень 0"));
+        armorList.add(ColorUtil.getMessage("&e- &aАлмазка уровень 1"));
+        armorList.add(ColorUtil.getMessage("&e- &bАлмазка уровень 2"));
+        armorList.add(ColorUtil.getMessage("&e- &cАлмазка уровень 3"));
+        armorMeta.setLore(armorList);
+        armorStack.setItemMeta(armorMeta);
+
+        inv.setItem(1, armorStack);
         p.openInventory(inv);
     }
 
     public static void openBlocksMenu(Player p){
         Inventory inv = Bukkit.createInventory(null, 18, "Блоки");
 
-        ItemStack sandstoneStack = new ItemStack(Material.SANDSTONE, 1);
+        ItemStack sandstoneStack = new ItemStack(Material.SANDSTONE, 2);
         ItemMeta sandstoneMeta = sandstoneStack.getItemMeta();
         sandstoneStack.setData(new Sandstone(SandstoneType.SMOOTH));
         sandstoneMeta.setDisplayName(ColorUtil.getMessage("&fГладкий песчаник"));
@@ -49,7 +66,16 @@ public class Trader {
         sandstoneStack.setItemMeta(sandstoneMeta);
         inv.setItem(0, sandstoneStack);
 
-        ItemStack bedStack = new ItemStack(Material.BED, 1);
+        ItemStack sandstoneStairsStack = new ItemStack(Material.SANDSTONE_STAIRS, 2);
+        ItemMeta sandstoneStairsMeta = sandstoneStairsStack.getItemMeta();
+        sandstoneStairsMeta.setDisplayName(ColorUtil.getMessage("&fСтупеньки из песчаника"));
+        List<String> sandstoneStairsList = new ArrayList<>();
+        sandstoneStairsList.add(ColorUtil.getMessage("&dЦена: &63 бронзы"));
+        sandstoneStairsMeta.setLore(sandstoneStairsList);
+        sandstoneStairsStack.setItemMeta(sandstoneStairsMeta);
+        inv.setItem(1, sandstoneStairsStack);
+
+        ItemStack bedStack = new ItemStack(Material.BED, 2);
         ItemMeta bedMeta = bedStack.getItemMeta();
         bedMeta.setDisplayName(ColorUtil.getMessage("&f← &eНазад"));
         bedStack.setItemMeta(bedMeta);

@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.SpawnEgg;
 import org.lordalex.bedwarslcp.BedWarsLCP;
+import org.lordalex.bedwarslcp.utils.BedWarsUtil;
 import org.lordalex.bedwarslcp.utils.ColorUtil;
 
 import java.util.ArrayList;
@@ -24,8 +25,10 @@ public class StartCommand implements CommandExecutor{
             "&e/bw &7trade&f: заспавнить торговца");
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+
         if(args[0].equalsIgnoreCase("start") && sender.isOp()){
             BedWarsLCP.isStarted = true;
+            BedWarsUtil.start(sender);
             sender.sendMessage("BedWars was started");
             return true;
         }
@@ -36,9 +39,10 @@ public class StartCommand implements CommandExecutor{
         }
         if(args == null){
             sender.sendMessage(ColorUtil.getMessage("&e/bw &7start&f: начать игру BedWars\n" +
+                    "&e/bw &7start&f: завершить игру BedWars\n" +
                     "&e/bw &7kit&f: получить тестовый набор"));
         }
-        if(args[0].equalsIgnoreCase("kit")){
+        if(args[0].equalsIgnoreCase("kit") && sender.isOp()){
             if (!(sender instanceof Player))
             {
                 sender.sendMessage("You must be a player to execute that command!");
@@ -70,6 +74,7 @@ public class StartCommand implements CommandExecutor{
             ItemMeta im3 = is3.getItemMeta();
             im3.setDisplayName("GPS трекер");
             is3.setItemMeta(im3);
+
 
             p.getInventory().addItem(new ItemStack(Material.IRON_PICKAXE, 1));
             p.getInventory().addItem(new ItemStack(Material.SANDSTONE, 64));

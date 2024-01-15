@@ -19,7 +19,7 @@ public final class BedWarsLCP extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        System.out.println("PLUGIN ACTIVATED!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println("PLUGIN ACTIVATED!");
         Bukkit.getPluginManager().registerEvents(new SavingPlatform(), this);
         Bukkit.getPluginManager().registerEvents(new TrackerGPS(), this);
         Bukkit.getPluginManager().registerEvents(new TeleportationDust(), this);
@@ -34,7 +34,6 @@ public final class BedWarsLCP extends JavaPlugin {
                     world.setThundering(false);
                     world.setStorm(false);
                 }
-
             }
         }, 0L, 20L);
 

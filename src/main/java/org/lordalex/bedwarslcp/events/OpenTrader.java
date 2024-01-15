@@ -32,23 +32,49 @@ public class OpenTrader implements Listener {
             e.setCancelled(true);
         }
         if(e.getView().getTitle().equals("Блоки")){
-            if(e.getCurrentItem() != null
-                    && e.getCurrentItem().getItemMeta() != null
-                    && e.getCurrentItem().getItemMeta().getDisplayName().equals(ColorUtil.getMessage("&fГладкий песчаник"))){
+            if(e.getCurrentItem() != null && e.getCurrentItem().getItemMeta() != null){
+                if(e.getCurrentItem().getItemMeta().getDisplayName().equals(ColorUtil.getMessage("&fГладкий песчаник"))){
 
-                if(e.getClick() == ClickType.SHIFT_LEFT || e.getClick() == ClickType.SHIFT_RIGHT) {
-                    if(checkItem(p, Material.CLAY_BRICK, 10)) {
-                        p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 10));
-                        p.getInventory().addItem(new ItemStack(Material.SANDSTONE, 20));
+                    if (e.getClick() == ClickType.SHIFT_LEFT || e.getClick() == ClickType.SHIFT_RIGHT) {
+                        if (checkItem(p, Material.CLAY_BRICK, 10)) {
+                            p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 10));
+                            p.getInventory().addItem(new ItemStack(Material.SANDSTONE, 20));
+                        }
+                    } else {
+                        if (checkItem(p, Material.CLAY_BRICK, 1)) {
+                            p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 1));
+                            p.getInventory().addItem(new ItemStack(Material.SANDSTONE, 2));
+                        }
                     }
                 }
-                else{
-                    if(checkItem(p, Material.CLAY_BRICK, 1)) {
-                        p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 1));
-                        p.getInventory().addItem(new ItemStack(Material.SANDSTONE, 2));
+                else if(e.getCurrentItem().getItemMeta().getDisplayName().equals(ColorUtil.getMessage("&fСтупеньки из песчаника"))){
+
+                    if (e.getClick() == ClickType.SHIFT_LEFT || e.getClick() == ClickType.SHIFT_RIGHT) {
+                        if (checkItem(p, Material.CLAY_BRICK, 15)) {
+                            p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 15));
+                            p.getInventory().addItem(new ItemStack(Material.SANDSTONE_STAIRS, 10));
+                        }
+                    } else {
+                        if (checkItem(p, Material.CLAY_BRICK, 3)) {
+                            p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 3));
+                            p.getInventory().addItem(new ItemStack(Material.SANDSTONE, 2));
+                        }
                     }
                 }
+                else if(e.getCurrentItem().getItemMeta().getDisplayName().equals(ColorUtil.getMessage("&fСтупеньки из песчаника"))){
 
+                    if (e.getClick() == ClickType.SHIFT_LEFT || e.getClick() == ClickType.SHIFT_RIGHT) {
+                        if (checkItem(p, Material.CLAY_BRICK, 15)) {
+                            p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 15));
+                            p.getInventory().addItem(new ItemStack(Material.SANDSTONE_STAIRS, 10));
+                        }
+                    } else {
+                        if (checkItem(p, Material.CLAY_BRICK, 3)) {
+                            p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 3));
+                            p.getInventory().addItem(new ItemStack(Material.SANDSTONE_STAIRS, 2));
+                        }
+                    }
+                }
             }
             e.setCancelled(true);
         }
