@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -34,10 +35,20 @@ public class StartCommand implements CommandExecutor{
         }
         if(args[0].equalsIgnoreCase("stop") && sender.isOp()){
             BedWarsLCP.isStarted = false;
+            if (!(sender instanceof Player))
+            {
+                return true;
+            }
+            Player p = (Player) sender;
+            for(Entity ent : p.getWorld().getEntities()){
+                if(ent.getType() == EntityType.VILLAGER){
+                    ent.remove();
+                }
+            }
             sender.sendMessage("BedWars was stopped");
             return true;
         }
-        if(args == null){
+        if(args.length == 0){
             sender.sendMessage(ColorUtil.getMessage("&e/bw &7start&f: начать игру BedWars\n" +
                     "&e/bw &7start&f: завершить игру BedWars\n" +
                     "&e/bw &7kit&f: получить тестовый набор"));

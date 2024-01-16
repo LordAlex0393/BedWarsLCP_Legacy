@@ -11,15 +11,19 @@ import org.lordalex.bedwarslcp.events.OpenTrader;
 import org.lordalex.bedwarslcp.events.SavingPlatform;
 import org.lordalex.bedwarslcp.events.TeleportationDust;
 import org.lordalex.bedwarslcp.events.TrackerGPS;
+import org.lordalex.bedwarslcp.utils.MapConfig;
+import org.lordalex.bedwarslcp.utils.YmlPaser;
 
 public final class BedWarsLCP extends JavaPlugin {
     private static Plugin instance;
     public static boolean isStarted = false;
+    public static MapConfig mapConfig;
 
     @Override
     public void onEnable() {
         instance = this;
         System.out.println("PLUGIN ACTIVATED!");
+        mapConfig = YmlPaser.parseMapConfig("C:\\MineConfig\\MastebrConfig.yml");
         Bukkit.getPluginManager().registerEvents(new SavingPlatform(), this);
         Bukkit.getPluginManager().registerEvents(new TrackerGPS(), this);
         Bukkit.getPluginManager().registerEvents(new TeleportationDust(), this);

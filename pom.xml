@@ -44,6 +44,10 @@
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
+                <targetPath>resources</targetPath>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>
@@ -66,6 +70,11 @@
             <artifactId>spigot-api</artifactId>
             <version>1.8.8-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+            <version>2.13.0</version>
         </dependency>
     </dependencies>
 </project>
