@@ -23,17 +23,15 @@ import java.util.List;
 
 public class StartCommand implements CommandExecutor{
     private String COMMAND_LIST = ColorUtil.getMessage("&e/bw &7start&f: начать игру BedWars\n" +
-            "&e/bw &7kit&f: получить тестовый набор\n" +
-            "&e/bw &7trade&f: заспавнить торговца");
+            "&e/bw &7start&f: завершить игру BedWars\n" +
+            "&e/bw &7clear&f: очистить карту BedWars\n" +
+            "&e/bw &7trader&f: заспавнить торговца\n" +
+            "&e/bw &7kit&f: получить тестовый набор");
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
         if(args.length == 0){
-            sender.sendMessage(ColorUtil.getMessage("&e/bw &7start&f: начать игру BedWars\n" +
-                    "&e/bw &7start&f: завершить игру BedWars\n" +
-                    "&e/bw &7clear&f: очистить карту BedWars\n" +
-                    "&e/bw &7trader&f: заспавнить торговца\n" +
-                    "&e/bw &7kit&f: получить тестовый набор"));
+            sender.sendMessage(COMMAND_LIST);
         }
         else if(args[0].equalsIgnoreCase("start") && sender.isOp()){
             BedWarsLCP.isStarted = true;
@@ -122,8 +120,7 @@ public class StartCommand implements CommandExecutor{
             vil.setNoDamageTicks(200);
         }
         else{
-            sender.sendMessage(ColorUtil.getMessage("&e/bw &7start&f: начать игру BedWars\n" +
-                    "&e/bw &7kit&f: получить тестовый набор"));
+            sender.sendMessage(COMMAND_LIST);
         }
         return true;
     }
