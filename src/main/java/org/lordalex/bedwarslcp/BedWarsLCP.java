@@ -7,10 +7,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.lordalex.bedwarslcp.commands.StartCommand;
-import org.lordalex.bedwarslcp.events.OpenTrader;
-import org.lordalex.bedwarslcp.events.SavingPlatform;
-import org.lordalex.bedwarslcp.events.TeleportationDust;
-import org.lordalex.bedwarslcp.events.TrackerGPS;
+import org.lordalex.bedwarslcp.events.*;
 import org.lordalex.bedwarslcp.utils.MapConfig;
 import org.lordalex.bedwarslcp.utils.YmlPaser;
 
@@ -28,6 +25,7 @@ public final class BedWarsLCP extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new TrackerGPS(), this);
         Bukkit.getPluginManager().registerEvents(new TeleportationDust(), this);
         Bukkit.getPluginManager().registerEvents(new OpenTrader(), this);
+        Bukkit.getPluginManager().registerEvents(new BedWarsEvents(), this);
         getCommand("bw").setExecutor(new StartCommand());
 
         BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
