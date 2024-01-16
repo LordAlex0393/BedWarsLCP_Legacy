@@ -21,12 +21,10 @@ import java.sql.SQLOutput;
 import java.util.HashMap;
 
 import static jdk.xml.internal.SecuritySupport.getClassLoader;
+import static org.lordalex.bedwarslcp.BedWarsLCP.mapConfig;
 
 public class BedWarsUtil {
     public static void start(CommandSender sender){
-        System.out.println("Prepare to read file");
-        MapConfig mapConfig = YmlPaser.parseMapConfig("C:\\MineConfig\\MastebrConfig.yml");
-        System.out.println("YML is loaded");
         spawnVillagers(sender, mapConfig);
         new BukkitRunnable() {
             @Override

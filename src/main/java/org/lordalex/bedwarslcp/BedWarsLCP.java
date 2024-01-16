@@ -20,7 +20,9 @@ public final class BedWarsLCP extends JavaPlugin {
     public void onEnable() {
         instance = this;
         System.out.println("PLUGIN ACTIVATED!");
+
         mapConfig = YmlPaser.parseMapConfig("C:\\MineConfig\\MastebrConfig.yml");
+
         Bukkit.getPluginManager().registerEvents(new SavingPlatform(), this);
         Bukkit.getPluginManager().registerEvents(new TrackerGPS(), this);
         Bukkit.getPluginManager().registerEvents(new TeleportationDust(), this);

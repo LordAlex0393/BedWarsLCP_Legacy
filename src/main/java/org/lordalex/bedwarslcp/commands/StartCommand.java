@@ -2,6 +2,7 @@ package org.lordalex.bedwarslcp.commands;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -27,13 +28,20 @@ public class StartCommand implements CommandExecutor{
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
-        if(args[0].equalsIgnoreCase("start") && sender.isOp()){
+        if(args.length == 0){
+            sender.sendMessage(ColorUtil.getMessage("&e/bw &7start&f: начать игру BedWars\n" +
+                    "&e/bw &7start&f: завершить игру BedWars\n" +
+                    "&e/bw &7clear&f: очистить карту BedWars\n" +
+                    "&e/bw &7trader&f: заспавнить торговца\n" +
+                    "&e/bw &7kit&f: получить тестовый набор"));
+        }
+        else if(args[0].equalsIgnoreCase("start") && sender.isOp()){
             BedWarsLCP.isStarted = true;
             BedWarsUtil.start(sender);
             sender.sendMessage("BedWars was started");
             return true;
         }
-        if(args[0].equalsIgnoreCase("stop") && sender.isOp()){
+        else if(args[0].equalsIgnoreCase("stop") && sender.isOp()){
             BedWarsLCP.isStarted = false;
             if (!(sender instanceof Player))
             {
@@ -48,10 +56,16 @@ public class StartCommand implements CommandExecutor{
             sender.sendMessage("BedWars was stopped");
             return true;
         }
-        if(args.length == 0){
-            sender.sendMessage(ColorUtil.getMessage("&e/bw &7start&f: начать игру BedWars\n" +
-                    "&e/bw &7start&f: завершить игру BedWars\n" +
-                    "&e/bw &7kit&f: получить тестовый набор"));
+        else if(args[0].equalsIgnoreCase("clear") && sender.isOp()){
+            Player p = (Player) sender;
+            World world = p.getWorld();
+            List<Entity> entList = world.getEntities();
+            for(Entity current : entList){
+                if (current.getType() == EntityType.DROPPED_ITEM){
+                    current.remove();
+                }
+            }
+            return true;
         }
         if(args[0].equalsIgnoreCase("kit") && sender.isOp()){
             if (!(sender instanceof Player))
