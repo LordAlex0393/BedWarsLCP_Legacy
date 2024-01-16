@@ -1,18 +1,13 @@
 package org.lordalex.bedwarslcp.events;
 
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.lordalex.bedwarslcp.BedWarsLCP;
 import org.lordalex.bedwarslcp.utils.ColorUtil;
@@ -57,7 +52,6 @@ public class SavingPlatform implements Listener {
             area.add(loc.clone().add(-1, 0, 0));
             area.add(loc.clone().add(-1, 0, -1));
 
-
             area.add(loc.clone().add(2, 0, 1));
             area.add(loc.clone().add(2, 0, -1));
             area.add(loc.clone().add(1, 0, 2));
@@ -66,7 +60,6 @@ public class SavingPlatform implements Listener {
             area.add(loc.clone().add(-1, 0, -2));
             area.add(loc.clone().add(-2, 0, 1));
             area.add(loc.clone().add(-2, 0, -1));
-
 
             for(Location l : area){
                 if(!p.getWorld().getBlockAt(l).getType().isSolid()){
