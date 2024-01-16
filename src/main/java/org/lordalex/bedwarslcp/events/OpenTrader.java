@@ -22,6 +22,7 @@ import org.lordalex.bedwarslcp.utils.Trader;
 public class OpenTrader implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent e){
+        if(e == null) return;
         Player p = (Player) e.getView().getPlayer();
         if(e.getView().getTitle().equals("Торговец")){
             if(e.getCurrentItem() != null
@@ -33,9 +34,9 @@ public class OpenTrader implements Listener {
         }
         if(e.getView().getTitle().equals("Блоки")){
             if(e.getCurrentItem() != null && e.getCurrentItem().getItemMeta() != null){
-                if(e.getCurrentItem().getItemMeta().getDisplayName().equals(ColorUtil.getMessage("&fГладкий песчаник"))){
 
-                    if (e.getClick() == ClickType.SHIFT_LEFT || e.getClick() == ClickType.SHIFT_RIGHT) {
+                if(isEqualsItem(e, "&fГладкий песчаник")){
+                    if (isShiftClick(e)) {
                         if (checkItem(p, Material.CLAY_BRICK, 10)) {
                             p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 10));
                             p.getInventory().addItem(new ItemStack(Material.SANDSTONE, 20));
@@ -47,23 +48,9 @@ public class OpenTrader implements Listener {
                         }
                     }
                 }
-                else if(e.getCurrentItem().getItemMeta().getDisplayName().equals(ColorUtil.getMessage("&fСтупеньки из песчаника"))){
 
-                    if (e.getClick() == ClickType.SHIFT_LEFT || e.getClick() == ClickType.SHIFT_RIGHT) {
-                        if (checkItem(p, Material.CLAY_BRICK, 15)) {
-                            p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 15));
-                            p.getInventory().addItem(new ItemStack(Material.SANDSTONE_STAIRS, 10));
-                        }
-                    } else {
-                        if (checkItem(p, Material.CLAY_BRICK, 3)) {
-                            p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 3));
-                            p.getInventory().addItem(new ItemStack(Material.SANDSTONE, 2));
-                        }
-                    }
-                }
-                else if(e.getCurrentItem().getItemMeta().getDisplayName().equals(ColorUtil.getMessage("&fСтупеньки из песчаника"))){
-
-                    if (e.getClick() == ClickType.SHIFT_LEFT || e.getClick() == ClickType.SHIFT_RIGHT) {
+                else if(isEqualsItem(e,"&fСтупеньки из песчаника")){
+                    if (isShiftClick(e)) {
                         if (checkItem(p, Material.CLAY_BRICK, 15)) {
                             p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 15));
                             p.getInventory().addItem(new ItemStack(Material.SANDSTONE_STAIRS, 10));
@@ -75,7 +62,63 @@ public class OpenTrader implements Listener {
                         }
                     }
                 }
+
+                else if(isEqualsItem(e,"&fЭндерняк")){
+                    if (isShiftClick(e)) {
+                        if (checkItem(p, Material.CLAY_BRICK, 70)) {
+                            p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 70));
+                            p.getInventory().addItem(new ItemStack(Material.ENDER_STONE, 10));
+                        }
+                    } else {
+                        if (checkItem(p, Material.CLAY_BRICK, 7)) {
+                            p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 7));
+                            p.getInventory().addItem(new ItemStack(Material.ENDER_STONE, 1));
+                        }
+                    }
+                }
+
+                else if(isEqualsItem(e,"&fЖелезный блок")){
+                    if (isShiftClick(e)) {
+                        if (checkItem(p, Material.IRON_INGOT, 30)) {
+                            p.getInventory().removeItem(new ItemStack(Material.IRON_INGOT, 30));
+                            p.getInventory().addItem(new ItemStack(Material.IRON_BLOCK, 10));
+                        }
+                    } else {
+                        if (checkItem(p, Material.IRON_INGOT, 3)) {
+                            p.getInventory().removeItem(new ItemStack(Material.IRON_INGOT, 3));
+                            p.getInventory().addItem(new ItemStack(Material.IRON_BLOCK, 1));
+                        }
+                    }
+                }
+
+                else if(isEqualsItem(e,"&fСветящийся камень")){
+                    if (isShiftClick(e)) {
+                        if (checkItem(p, Material.CLAY_BRICK, 160)) {
+                            p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 160));
+                            p.getInventory().addItem(new ItemStack(Material.GLOWSTONE, 40));
+                        }
+                    } else {
+                        if (checkItem(p, Material.CLAY_BRICK, 16)) {
+                            p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 16));
+                            p.getInventory().addItem(new ItemStack(Material.GLOWSTONE, 4));
+                        }
+                    }
+                }
+                else if(isEqualsItem(e,"&fСтекло")){
+                    if (isShiftClick(e)) {
+                        if (checkItem(p, Material.CLAY_BRICK, 40)) {
+                            p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 40));
+                            p.getInventory().addItem(new ItemStack(Material.GLASS, 10));
+                        }
+                    } else {
+                        if (checkItem(p, Material.CLAY_BRICK, 4)) {
+                            p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 4));
+                            p.getInventory().addItem(new ItemStack(Material.GLASS, 1));
+                        }
+                    }
+                }
             }
+
             e.setCancelled(true);
         }
         if(e.getView().getTitle().equals("Блоки")){
@@ -101,6 +144,7 @@ public class OpenTrader implements Listener {
         if (!(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
         if (!(e.getItem().getType() == Material.MONSTER_EGG)) return;
         Player p = e.getPlayer();
+        e.setCancelled(true);
         Villager vil = (Villager) p.getLocation().getWorld().spawnEntity(p.getLocation(),EntityType.VILLAGER);
         vil.setCustomName(ChatColor.YELLOW + "Торговец");
         vil.setCustomNameVisible(true);
@@ -111,5 +155,11 @@ public class OpenTrader implements Listener {
 
     private boolean checkItem(Player p, Material mat, int amount){
         return p.getInventory().containsAtLeast(new ItemStack(mat), amount);
+    }
+    private boolean isShiftClick(InventoryClickEvent e){
+        return (e.getClick() == ClickType.SHIFT_LEFT || e.getClick() == ClickType.SHIFT_RIGHT);
+    }
+    private boolean isEqualsItem(InventoryClickEvent e, String itemDisplayName){
+        return e.getCurrentItem().getItemMeta().getDisplayName().equals(ColorUtil.getMessage(itemDisplayName));
     }
 }

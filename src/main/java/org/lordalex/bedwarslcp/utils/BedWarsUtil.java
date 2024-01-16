@@ -13,21 +13,18 @@ import org.lordalex.bedwarslcp.BedWarsLCP;
 import java.util.ArrayList;
 
 public class BedWarsUtil {
-    private static int test = 0;
-
-
     public static void start(CommandSender sender){
-
-        if(BedWarsLCP.isStarted) {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if(BedWarsLCP.isStarted){
                     spawnGoldResourse(sender);
-                    test++;
                 }
-            }.runTaskTimer(BedWarsLCP.getInstance(), 0L, 10L);
-        }
-
+                else{
+                    cancel();
+                }
+            }
+        }.runTaskTimer(BedWarsLCP.getInstance(), 0L, 10L);
     }
     private static void spawnGoldResourse(CommandSender sender){
         Player p = (Player) sender;
@@ -35,13 +32,13 @@ public class BedWarsUtil {
         mapConfig.setGoldFrequency(100);
         ArrayList<ArrayList<Double>> goldSpawns = new ArrayList<>();
         ArrayList<Double> gs1 = new ArrayList<>();
-        gs1.add(-183.5);
-        gs1.add(68.5);
-        gs1.add(266.5);
+        gs1.add(-12.5);
+        gs1.add(63.5);
+        gs1.add(-2.5);
         ArrayList<Double> gs2 = new ArrayList<>();
-        gs2.add(-180.5);
-        gs2.add(68.5);
-        gs2.add(266.5);
+        gs2.add(-15.5);
+        gs2.add(63.5);
+        gs2.add(1.5);
 
         goldSpawns.add(gs1);
         goldSpawns.add(gs2);
