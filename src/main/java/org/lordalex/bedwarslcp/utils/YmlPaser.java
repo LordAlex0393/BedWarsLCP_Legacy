@@ -7,10 +7,10 @@ import java.io.File;
 import java.io.IOException;
 
 public class YmlPaser {
-    public static MapConfig parseMapConfig(String fileName){
+    public static MapConfig parseMapConfig(File file){
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         try {
-            MapConfig mapConfig = mapper.readValue(new File(fileName), MapConfig.class);
+            MapConfig mapConfig = mapper.readValue(file, MapConfig.class);
             return mapConfig;
         } catch (IOException e) {
             throw new RuntimeException(e);

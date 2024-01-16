@@ -1,5 +1,6 @@
 package org.lordalex.bedwarslcp;
 
+import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.event.world.WorldInitEvent;
@@ -11,6 +12,9 @@ import org.lordalex.bedwarslcp.events.*;
 import org.lordalex.bedwarslcp.utils.MapConfig;
 import org.lordalex.bedwarslcp.utils.YmlPaser;
 
+
+import java.io.*;
+
 public final class BedWarsLCP extends JavaPlugin {
     private static Plugin instance;
     public static boolean isStarted = false;
@@ -21,7 +25,8 @@ public final class BedWarsLCP extends JavaPlugin {
         instance = this;
         System.out.println("PLUGIN ACTIVATED!");
 
-        mapConfig = YmlPaser.parseMapConfig("C:\\MineConfig\\MastebrConfig.yml");
+        File file = new File("plugins\\BedWarsLCP\\MastebrConfig.yml");
+        mapConfig = YmlPaser.parseMapConfig(file);
 
         Bukkit.getPluginManager().registerEvents(new SavingPlatform(), this);
         Bukkit.getPluginManager().registerEvents(new TrackerGPS(), this);

@@ -1,8 +1,6 @@
 package org.lordalex.bedwarslcp.events;
 
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -12,8 +10,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.material.Sandstone;
+import org.bukkit.material.Wool;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import org.lordalex.bedwarslcp.BedWarsLCP;
 import org.lordalex.bedwarslcp.utils.BedWarsTeam;
 import org.lordalex.bedwarslcp.utils.ColorUtil;
@@ -77,5 +80,40 @@ public class BedWarsEvents implements Listener {
             is1.setItemMeta(im1);
             p.getInventory().addItem(is1);
         }
+    }
+    @EventHandler
+    public void onClick(PlayerInteractEvent e) {
+        Player p = e.getPlayer();
+        if (!(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
+        if (!(e.getItem().getType() == Material.NAME_TAG)) return;
+
+        Inventory inv = Bukkit.createInventory(null, 27, "Торговец");
+
+
+        ItemStack woolStack1 = new ItemStack( Material.WOOL, 1, (byte)5);
+        ItemMeta woolMeta1 = woolStack1.getItemMeta();
+        woolMeta1.setDisplayName(ColorUtil.getMessage("&aЗеленая команда"));
+        woolStack1.setItemMeta(woolMeta1);
+        inv.setItem(10, woolStack1);
+
+        ItemStack woolStack2 = new ItemStack( Material.WOOL, 1, (byte)4);
+        ItemMeta woolMeta2 = woolStack2.getItemMeta();
+        woolMeta2.setDisplayName(ColorUtil.getMessage("&eЖелтая команда"));
+        woolStack2.setItemMeta(woolMeta2);
+        inv.setItem(12, woolStack2);
+
+        ItemStack woolStack3 = new ItemStack( Material.WOOL, 1, (byte)14);
+        ItemMeta woolMeta3 = woolStack3.getItemMeta();
+        woolMeta3.setDisplayName(ColorUtil.getMessage("&cКрасная команда"));
+        woolStack3.setItemMeta(woolMeta3);
+        inv.setItem(14, woolStack3);
+
+        ItemStack woolStack4 = new ItemStack( Material.WOOL, 1, (byte)11);
+        ItemMeta woolMeta4 = woolStack4.getItemMeta();
+        woolMeta4.setDisplayName(ColorUtil.getMessage("&9Синяя команда"));
+        woolStack4.setItemMeta(woolMeta4);
+        inv.setItem(16, woolStack4);
+
+        p.openInventory(inv);
     }
 }
