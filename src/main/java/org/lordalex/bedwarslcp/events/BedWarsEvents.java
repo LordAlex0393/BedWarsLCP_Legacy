@@ -1,31 +1,22 @@
 package org.lordalex.bedwarslcp.events;
 
 import org.bukkit.*;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.Sandstone;
-import org.bukkit.material.Wool;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
-import org.lordalex.bedwarslcp.BedWarsLCP;
-import org.lordalex.bedwarslcp.utils.BedWarsTeam;
 import org.lordalex.bedwarslcp.utils.ColorUtil;
 import org.spigotmc.event.player.PlayerSpawnLocationEvent;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
+import static org.lordalex.bedwarslcp.BedWarsLCP.allowedToBreak;
 import static org.lordalex.bedwarslcp.BedWarsLCP.mapConfig;
 
 public class BedWarsEvents implements Listener {
@@ -87,7 +78,7 @@ public class BedWarsEvents implements Listener {
         if (!(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
         if (!(e.getItem().getType() == Material.NAME_TAG)) return;
 
-        Inventory inv = Bukkit.createInventory(null, 27, "Торговец");
+        Inventory inv = Bukkit.createInventory(null, 27, "Выбор команды");
 
 
         ItemStack woolStack1 = new ItemStack( Material.WOOL, 1, (byte)5);
@@ -116,4 +107,54 @@ public class BedWarsEvents implements Listener {
 
         p.openInventory(inv);
     }
+    @EventHandler
+    public void onClick(InventoryClickEvent e){
+        if(e == null) return;
+        Player p = (Player) e.getView().getPlayer();
+
+        if(e.getView().getTitle().equals("Выбор команды")){
+            if(e.getCurrentItem() != null && e.getCurrentItem().getItemMeta() != null){
+                if(isEqualsItem(e, "&aЗеленая команда")){
+                    //TeamConfig.teamMap.put(p.getUniqueId(), "green");
+                    p.teleport(new Location(p.getWorld(), 571.5, 62, 475.5));
+                }
+                if(isEqualsItem(e, "&eЖелтая команда")){
+                    //TeamConfig.teamMap.put(p.getUniqueId(), "yellow");
+                }
+                else if(isEqualsItem(e, "&cКрасная команда")){
+                    //TeamConfig.teamMap.put(p.getUniqueId(), "red");
+                }
+                else if(isEqualsItem(e, "&9Синяя команда")){
+                    //TeamConfig.teamMap.put(p.getUniqueId(), "blue");
+                }
+                else{
+                    e.setCancelled(true);
+                    return;
+                }
+                p.getInventory().removeItem(new ItemStack(Material.NAME_TAG, 1));
+                //p.damage(10000000);
+            }
+            e.setCancelled(true);
+        }
+
+    }
+
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent e) {
+        if(!e.getPlayer().isOp()){
+            e.setCancelled(true);
+        }
+        if(!allowedToBreak.contains(e.getBlock().getType())){
+            e.setCancelled(true);
+        }
+
+    }
+    private boolean isEqualsItem(InventoryClickEvent e, String itemDisplayName){
+        return e.getCurrentItem().getItemMeta().getDisplayName().equals(ColorUtil.getMessage(itemDisplayName));
+    }
+    @EventHandler
+    public void onPlayerSpawn(PlayerSpawnLocationEvent e){
+        e.getPlayer().sendMessage("SPAWN");
+    }
+
 }

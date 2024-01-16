@@ -2,6 +2,8 @@ package org.lordalex.bedwarslcp;
 
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.event.world.WorldInitEvent;
 import org.bukkit.plugin.Plugin;
@@ -14,12 +16,15 @@ import org.lordalex.bedwarslcp.utils.YmlPaser;
 
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.UUID;
 
 public final class BedWarsLCP extends JavaPlugin {
     private static Plugin instance;
     public static boolean isStarted = false;
     public static MapConfig mapConfig;
-
+    public static HashSet<Material> allowedToBreak;
     @Override
     public void onEnable() {
         instance = this;
@@ -27,6 +32,16 @@ public final class BedWarsLCP extends JavaPlugin {
 
         File file = new File("plugins\\BedWarsLCP\\MastebrConfig.yml");
         mapConfig = YmlPaser.parseMapConfig(file);
+
+        allowedToBreak = new HashSet<>();
+        allowedToBreak.add(Material.SANDSTONE);
+        allowedToBreak.add(Material.WEB);
+        allowedToBreak.add(Material.GLASS);
+        allowedToBreak.add(Material.SANDSTONE_STAIRS);
+        allowedToBreak.add(Material.ENDER_STONE);
+        allowedToBreak.add(Material.GLOWSTONE);
+        allowedToBreak.add(Material.IRON_BLOCK);
+
 
         Bukkit.getPluginManager().registerEvents(new SavingPlatform(), this);
         Bukkit.getPluginManager().registerEvents(new TrackerGPS(), this);
@@ -42,6 +57,7 @@ public final class BedWarsLCP extends JavaPlugin {
                 for(World world : Bukkit.getServer().getWorlds()) {
                     world.setThundering(false);
                     world.setStorm(false);
+                    world.setTime(3000);
                 }
             }
         }, 0L, 20L);

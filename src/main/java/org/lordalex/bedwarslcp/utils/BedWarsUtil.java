@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
@@ -19,6 +20,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLOutput;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import static jdk.xml.internal.SecuritySupport.getClassLoader;
 import static org.lordalex.bedwarslcp.BedWarsLCP.mapConfig;
