@@ -22,6 +22,7 @@ import org.lordalex.bedwarslcp.utils.Trader;
 public class OpenTrader implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent e){
+        if(e == null) return;
         Player p = (Player) e.getView().getPlayer();
         if(e.getView().getTitle().equals("Торговец")){
             if(e.getCurrentItem() != null

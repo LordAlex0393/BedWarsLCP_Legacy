@@ -15,6 +15,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.lordalex.bedwarslcp.BedWarsLCP;
+import org.lordalex.bedwarslcp.utils.ColorUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,20 +33,20 @@ public class SavingPlatform implements Listener {
 
     @EventHandler
     public void platformCreating(PlayerInteractEvent e) {
-        List<Location> area;
-        Player p = e.getPlayer();
+
         if (!(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
         if (!(e.getItem().getType() == Material.BLAZE_ROD)) return;
-
-        if (!cooldownsMap.containsKey(p.getUniqueId())
-                || System.currentTimeMillis() - cooldownsMap.get(p.getUniqueId()) >= COOLDOWN) {
-            cooldownsMap.put(p.getUniqueId(), System.currentTimeMillis());
+        Player p = e.getPlayer();
+        if (!cooldownsMap.containsKey(p.getUniqueId()) || System.currentTimeMillis() - cooldownsMap.get(p.getUniqueId()) >= COOLDOWN) {
             Location loc = p.getLocation();
             if(loc.getY() < 0){
                 loc.setY(0);
             }
+            else if(loc.getY() > 255){
+                return;
+            }
 
-            area = new ArrayList<>();
+            List<Location> area = new ArrayList<>();
             area.add(loc.clone().add(0, 0, 0));
             area.add(loc.clone().add(1, 0, 0));
             area.add(loc.clone().add(0, 0, 1));
@@ -55,6 +56,7 @@ public class SavingPlatform implements Listener {
             area.add(loc.clone().add(-1, 0, 1));
             area.add(loc.clone().add(-1, 0, 0));
             area.add(loc.clone().add(-1, 0, -1));
+
 
             area.add(loc.clone().add(2, 0, 1));
             area.add(loc.clone().add(2, 0, -1));
@@ -67,7 +69,7 @@ public class SavingPlatform implements Listener {
 
 
             for(Location l : area){
-                if(p.getWorld().getBlockAt(l).getType() == Material.AIR || l.equals(loc)){
+                if(!p.getWorld().getBlockAt(l).getType().isSolid()){
                     p.getWorld().getBlockAt(l).setType(Material.GLASS);
                 }
             }
@@ -85,12 +87,13 @@ public class SavingPlatform implements Listener {
 
             loc.setX(centering(loc.getX()));
             loc.setZ(centering(loc.getZ()));
-            p.teleport(loc.clone().add(0, 1, 0));
+            p.teleport(loc.clone().add(0, 1.1, 0));
 
-            p.sendMessage("You have activated the platform!");
-        } else {
-            //if the cooldown is not over, send the player a message
-            p.sendMessage("Reloading: " + (COOLDOWN - (System.currentTimeMillis() - cooldownsMap.get(p.getUniqueId()))) / 1000 + "s");
+            cooldownsMap.put(p.getUniqueId(), System.currentTimeMillis());
+            p.sendMessage(ColorUtil.getMessage("&aПлатформа активирована"));
+        }
+        else {
+            p.sendMessage(ColorUtil.getMessage("&eПерезарядка: ") + (COOLDOWN - (System.currentTimeMillis() - cooldownsMap.get(p.getUniqueId()))) / 1000 + "с");
         }
     }
 

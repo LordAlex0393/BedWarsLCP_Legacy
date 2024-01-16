@@ -13,15 +13,16 @@ import org.lordalex.bedwarslcp.BedWarsLCP;
 public class TrackerGPS implements Listener{
     @EventHandler
     public void onEvent(PlayerInteractEvent e) {
+        if(e == null) return;
         Player p = e.getPlayer();
         Player anotherPlayer = getNearestPlayerDistance(p);
         p.setCompassTarget(anotherPlayer.getLocation());
     }
     @EventHandler
     public void onClick(PlayerInteractEvent e) {
-        Player p = e.getPlayer();
         if (!(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
         if (!(e.getItem().getType() == Material.COMPASS)) return;
+        Player p = e.getPlayer();
         Player anotherPlayer = getNearestPlayerDistance(p);
         if(anotherPlayer.equals(p)){
             p.sendMessage("Нет других игроков");
