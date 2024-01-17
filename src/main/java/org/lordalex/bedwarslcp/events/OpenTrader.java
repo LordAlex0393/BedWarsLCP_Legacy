@@ -42,6 +42,9 @@ public class OpenTrader implements Listener {
                 else if(isEqualsItem(e, "&l&bМечи")){
                     Trader.openSwordMenu((Player) e.getView().getPlayer());
                 }
+                else if(isEqualsItem(e, "&l&bЕда")){
+                    Trader.openFoodMenu((Player) e.getView().getPlayer());
+                }
                 e.setCancelled(true);
             }
         }
@@ -197,6 +200,21 @@ public class OpenTrader implements Listener {
                     buyItem(e, Material.GOLD_INGOT, killmagedonSwordStack, 30, 1);
                 }
 
+                else if (isEqualsItem(e,"&f← &eНазад")) {
+                    Trader.openGlobalMenu((Player) e.getView().getPlayer());
+                }
+                e.setCancelled(true);
+            }
+        }
+        else if(e.getView().getTitle().equals("Еда")) {
+            if (e.getCurrentItem() != null && e.getCurrentItem().getItemMeta() != null) {
+
+                if (isEqualsItem(e, "&fЕда чемпионов")) {
+                    buyItem(e, Material.CLAY_BRICK, new ItemStack(Material.APPLE), 1, 1);
+                }
+                else if (isEqualsItem(e, "&fЖареная свинина")) {
+                    buyItem(e, Material.CLAY_BRICK, new ItemStack(Material.GRILLED_PORK), 2, 1);
+                }
                 else if (isEqualsItem(e,"&f← &eНазад")) {
                     Trader.openGlobalMenu((Player) e.getView().getPlayer());
                 }
