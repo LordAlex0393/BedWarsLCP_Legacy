@@ -42,18 +42,7 @@ public class StartCommand implements CommandExecutor{
             return true;
         }
         else if(args[0].equalsIgnoreCase("stop") && sender.isOp()){
-            BedWarsLCP.isStarted = false;
-            if (!(sender instanceof Player))
-            {
-                return true;
-            }
-            Player p = (Player) sender;
-            for(Entity ent : p.getWorld().getEntities()){
-                if(ent.getType() == EntityType.VILLAGER){
-                    ent.remove();
-                }
-            }
-            sender.sendMessage("BedWars was stopped");
+            stopGame(sender);
             return true;
         }
         else if(args[0].equalsIgnoreCase("reset") && sender.isOp()){
@@ -65,14 +54,7 @@ public class StartCommand implements CommandExecutor{
             return true;
         }
         else if(args[0].equalsIgnoreCase("clear") && sender.isOp()){
-            Player p = (Player) sender;
-            World world = p.getWorld();
-            List<Entity> entList = world.getEntities();
-            for(Entity current : entList){
-                if (current.getType() == EntityType.DROPPED_ITEM){
-                    current.remove();
-                }
-            }
+            clearDroppedItems(sender);
             return true;
         }
         if(args[0].equalsIgnoreCase("kit") && sender.isOp()){
@@ -133,5 +115,26 @@ public class StartCommand implements CommandExecutor{
             sender.sendMessage(COMMAND_LIST);
         }
         return true;
+    }
+    private void clearDroppedItems(CommandSender sender){
+        Player p = (Player) sender;
+        World world = p.getWorld();
+        List<Entity> entList = world.getEntities();
+        for(Entity current : entList){
+            if (current.getType() == EntityType.DROPPED_ITEM){
+                current.remove();
+            }
+        }
+    }
+    private void stopGame(CommandSender sender){
+        BedWarsLCP.isStarted = false;
+        Player p = (Player) sender;
+        for(Entity ent : p.getWorld().getEntities()){
+            if(ent.getType() == EntityType.VILLAGER){
+                ent.remove();
+            }
+        }
+        clearDroppedItems(sender);
+        sender.sendMessage("BedWars was stopped");
     }
 }

@@ -17,7 +17,7 @@ public class Trader {
     public static void openGlobalMenu(Player p){
         Inventory inv = Bukkit.createInventory(null, 27, "Торговец");
 
-        ItemStack sandstoneStack = new ItemStack(Material.SANDSTONE, 1);
+        ItemStack sandstoneStack = new ItemStack(Material.SANDSTONE, 1, (byte) 2);
         ItemMeta sandstoneMeta = sandstoneStack.getItemMeta();
         sandstoneStack.setData(new Sandstone(SandstoneType.SMOOTH));
         sandstoneMeta.setDisplayName(ColorUtil.getMessage("&l&bБлоки"));
@@ -158,9 +158,8 @@ public class Trader {
     public static void openBlocksMenu(Player p){
         Inventory inv = Bukkit.createInventory(null, 18, "Блоки");
 
-        ItemStack sandstoneStack = new ItemStack(Material.SANDSTONE, 2);
+        ItemStack sandstoneStack = new ItemStack(Material.SANDSTONE, 2, (byte) 2);
         ItemMeta sandstoneMeta = sandstoneStack.getItemMeta();
-        sandstoneStack.setData(new Sandstone(SandstoneType.SMOOTH));
         sandstoneMeta.setDisplayName(ColorUtil.getMessage("&fГладкий песчаник"));
         List<String> sandstoneList = new ArrayList<>();
         sandstoneList.add(ColorUtil.getMessage("&dЦена: &61 бронза"));

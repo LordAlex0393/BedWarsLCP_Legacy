@@ -28,24 +28,26 @@ public class BedWarsEvents implements Listener {
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent event)
     {
-        Player p = event.getPlayer();
-        String position = mapConfig.getLobby();
-        String[] coordinates = position.split(", ");
-        double X = Double.parseDouble(coordinates[0]);
-        double Y = Double.parseDouble(coordinates[1]);
-        double Z = Double.parseDouble(coordinates[2]);
-        Location location = new Location(p.getWorld(), X, Y, Z);
-        p.sendMessage(position);
-        p.teleport(location);
+        if(!isStarted){
+            Player p = event.getPlayer();
+            String position = mapConfig.getLobby();
+            String[] coordinates = position.split(", ");
+            double X = Double.parseDouble(coordinates[0]);
+            double Y = Double.parseDouble(coordinates[1]);
+            double Z = Double.parseDouble(coordinates[2]);
+            Location location = new Location(p.getWorld(), X, Y, Z);
+            p.sendMessage(position);
+            p.teleport(location);
 
 
-        if(!p.getInventory().contains(Material.NAME_TAG))
-        {
-            ItemStack is1 = new ItemStack(Material.NAME_TAG, 1);
-            ItemMeta im1 = is1.getItemMeta();
-            im1.setDisplayName(ColorUtil.getMessage("&eВыбор команды"));
-            is1.setItemMeta(im1);
-            p.getInventory().addItem(is1);
+            if(!p.getInventory().contains(Material.NAME_TAG))
+            {
+                ItemStack is1 = new ItemStack(Material.NAME_TAG, 1);
+                ItemMeta im1 = is1.getItemMeta();
+                im1.setDisplayName(ColorUtil.getMessage("&eВыбор команды"));
+                is1.setItemMeta(im1);
+                p.getInventory().addItem(is1);
+            }
         }
     }
     @EventHandler

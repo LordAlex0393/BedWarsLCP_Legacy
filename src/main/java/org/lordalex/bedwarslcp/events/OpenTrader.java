@@ -15,6 +15,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.lordalex.bedwarslcp.BedWarsLCP;
 import org.lordalex.bedwarslcp.utils.ColorUtil;
 import org.lordalex.bedwarslcp.utils.Trader;
@@ -32,102 +33,35 @@ public class OpenTrader implements Listener {
             }
             e.setCancelled(true);
         }
-        if(e.getView().getTitle().equals("Блоки")){
-            if(e.getCurrentItem() != null && e.getCurrentItem().getItemMeta() != null){
+        int materialAmount;
+        int itemAmount;
 
-                if(isEqualsItem(e, "&fГладкий песчаник")){
-                    if (isShiftClick(e)) {
-                        if (checkItem(p, Material.CLAY_BRICK, 10)) {
-                            p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 10));
-                            p.getInventory().addItem(new ItemStack(Material.SANDSTONE, 20));
-                        }
-                    } else {
-                        if (checkItem(p, Material.CLAY_BRICK, 1)) {
-                            p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 1));
-                            p.getInventory().addItem(new ItemStack(Material.SANDSTONE, 2));
-                        }
-                    }
-                }
+        if(e.getView().getTitle().equals("Блоки")) {
+            if (e.getCurrentItem() != null && e.getCurrentItem().getItemMeta() != null) {
 
-                else if(isEqualsItem(e,"&fСтупеньки из песчаника")){
-                    if (isShiftClick(e)) {
-                        if (checkItem(p, Material.CLAY_BRICK, 15)) {
-                            p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 15));
-                            p.getInventory().addItem(new ItemStack(Material.SANDSTONE_STAIRS, 10));
-                        }
-                    } else {
-                        if (checkItem(p, Material.CLAY_BRICK, 3)) {
-                            p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 3));
-                            p.getInventory().addItem(new ItemStack(Material.SANDSTONE_STAIRS, 2));
-                        }
-                    }
+                if (isEqualsItem(e, "&fГладкий песчаник")) {
+                    ItemStack sandstoneItem = new ItemStack(Material.SANDSTONE, 1, (byte) 2);
+                    buyItem(e, Material.CLAY_BRICK, sandstoneItem, 1, 2);
                 }
-
-                else if(isEqualsItem(e,"&fЭндерняк")){
-                    if (isShiftClick(e)) {
-                        if (checkItem(p, Material.CLAY_BRICK, 70)) {
-                            p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 70));
-                            p.getInventory().addItem(new ItemStack(Material.ENDER_STONE, 10));
-                        }
-                    } else {
-                        if (checkItem(p, Material.CLAY_BRICK, 7)) {
-                            p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 7));
-                            p.getInventory().addItem(new ItemStack(Material.ENDER_STONE, 1));
-                        }
-                    }
+                else if (isEqualsItem(e, "&fСтупеньки из песчаника")) {
+                    buyItem(e, Material.CLAY_BRICK, new ItemStack(Material.SANDSTONE_STAIRS), 3, 2);
                 }
-
-                else if(isEqualsItem(e,"&fЖелезный блок")){
-                    if (isShiftClick(e)) {
-                        if (checkItem(p, Material.IRON_INGOT, 30)) {
-                            p.getInventory().removeItem(new ItemStack(Material.IRON_INGOT, 30));
-                            p.getInventory().addItem(new ItemStack(Material.IRON_BLOCK, 10));
-                        }
-                    } else {
-                        if (checkItem(p, Material.IRON_INGOT, 3)) {
-                            p.getInventory().removeItem(new ItemStack(Material.IRON_INGOT, 3));
-                            p.getInventory().addItem(new ItemStack(Material.IRON_BLOCK, 1));
-                        }
-                    }
+                else if (isEqualsItem(e, "&fЭндерняк")) {
+                    buyItem(e, Material.CLAY_BRICK, new ItemStack(Material.ENDER_STONE), 7, 1);
                 }
-
-                else if(isEqualsItem(e,"&fСветящийся камень")){
-                    if (isShiftClick(e)) {
-                        if (checkItem(p, Material.CLAY_BRICK, 160)) {
-                            p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 160));
-                            p.getInventory().addItem(new ItemStack(Material.GLOWSTONE, 40));
-                        }
-                    } else {
-                        if (checkItem(p, Material.CLAY_BRICK, 16)) {
-                            p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 16));
-                            p.getInventory().addItem(new ItemStack(Material.GLOWSTONE, 4));
-                        }
-                    }
+                else if (isEqualsItem(e, "&fЖелезный блок")) {
+                    buyItem(e, Material.IRON_INGOT, new ItemStack(Material.IRON_BLOCK), 3, 1);
+                } else if (isEqualsItem(e, "&fСветящийся камень")) {
+                    buyItem(e, Material.CLAY_BRICK, new ItemStack(Material.GLOWSTONE), 16, 4);
                 }
-                else if(isEqualsItem(e,"&fСтекло")){
-                    if (isShiftClick(e)) {
-                        if (checkItem(p, Material.CLAY_BRICK, 40)) {
-                            p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 40));
-                            p.getInventory().addItem(new ItemStack(Material.GLASS, 10));
-                        }
-                    } else {
-                        if (checkItem(p, Material.CLAY_BRICK, 4)) {
-                            p.getInventory().removeItem(new ItemStack(Material.CLAY_BRICK, 4));
-                            p.getInventory().addItem(new ItemStack(Material.GLASS, 1));
-                        }
-                    }
+                else if (isEqualsItem(e, "&fСтекло")) {
+                    buyItem(e, Material.CLAY_BRICK, new ItemStack(Material.GLASS), 4, 1);
+                }
+                else if (isEqualsItem(e,"&f← &eНазад")) {
+                    Trader.openGlobalMenu((Player) e.getView().getPlayer());
+                    e.setCancelled(true);
                 }
             }
-
-            e.setCancelled(true);
-        }
-        if(e.getView().getTitle().equals("Блоки")){
-            if(e.getCurrentItem() != null
-                    && e.getCurrentItem().getItemMeta() != null
-                    && e.getCurrentItem().getItemMeta().getDisplayName().equals(ColorUtil.getMessage("&f← &eНазад"))){
-                Trader.openGlobalMenu((Player) e.getView().getPlayer());
-            }
-            e.setCancelled(true);
         }
     }
     @EventHandler
@@ -161,5 +95,34 @@ public class OpenTrader implements Listener {
     }
     private boolean isEqualsItem(InventoryClickEvent e, String itemDisplayName){
         return e.getCurrentItem().getItemMeta().getDisplayName().equals(ColorUtil.getMessage(itemDisplayName));
+    }
+    private boolean buyItemShift(Player p, Material material, ItemStack item, int materialAmount, int itemAmount){
+        int factor = 10;
+        for(factor = 10; factor > 0; factor--){
+            buyItemNormal(p, material, item, materialAmount, itemAmount);
+        }
+        return true;
+    }
+    private boolean buyItemNormal(Player p, Material material, ItemStack item, int materialAmount, int itemAmount){
+        if (checkItem(p, material, materialAmount)) {
+            p.getInventory().removeItem(new ItemStack(material, materialAmount));
+            item.setAmount(itemAmount);
+            p.getInventory().addItem(item);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    private boolean buyItem(InventoryClickEvent e, Material material, ItemStack item, int materialAmount, int itemAmount){
+        Player p = (Player) e.getView().getPlayer();
+        if (isShiftClick(e)) {
+            buyItemShift(p, material, item, materialAmount, itemAmount);
+        }
+        else {
+            buyItemNormal(p, material, item, materialAmount, itemAmount);
+        }
+        e.setCancelled(true);
+        return true;
     }
 }
