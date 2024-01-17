@@ -11,11 +11,11 @@ on:
         uses: actions/checkout@v3
       
       - name: copy file via ssh password
-          uses: appleboy/scp-action@master
-          with:
-            host: ${{ secrets.HOST }}
-            username: ${{ secrets.USERNAME }}
-            key: ${{ secrets.KEY }}
-            port: ${{ secrets.PORT }}
-            source: "target/BedWarsLCP-1.0-SNAPSHOT.jar"
-            target: "C:\\Users\\orlov\\Documents\\ServerMineTest"
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          source: "target/BedWarsLCP-1.0-SNAPSHOT.jar"
+          target: "C:\\Users\\orlov\\Documents\\ServerMineTest"
