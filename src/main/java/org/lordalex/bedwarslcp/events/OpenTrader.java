@@ -45,6 +45,9 @@ public class OpenTrader implements Listener {
                 else if(isEqualsItem(e, "&l&bЕда")){
                     Trader.openFoodMenu((Player) e.getView().getPlayer());
                 }
+                else if(isEqualsItem(e, "&l&bСпециальное")){
+                    Trader.openSpecialMenu((Player) e.getView().getPlayer());
+                }
                 e.setCancelled(true);
             }
         }
@@ -214,6 +217,42 @@ public class OpenTrader implements Listener {
                 }
                 else if (isEqualsItem(e, "&fЖареная свинина")) {
                     buyItem(e, Material.CLAY_BRICK, new ItemStack(Material.GRILLED_PORK), 2, 1);
+                }
+                else if (isEqualsItem(e,"&f← &eНазад")) {
+                    Trader.openGlobalMenu((Player) e.getView().getPlayer());
+                }
+                e.setCancelled(true);
+            }
+        }
+        else if(e.getView().getTitle().equals("Специальное")) {
+            if (e.getCurrentItem() != null && e.getCurrentItem().getItemMeta() != null) {
+
+                if (isEqualsItem(e, "&fПаутинка")) {
+                    buyItem(e, Material.CLAY_BRICK, new ItemStack(Material.WEB), 24, 1);
+                }
+                else if (isEqualsItem(e, "&fУдочка")) {
+                    buyItem(e, Material.IRON_INGOT, new ItemStack(Material.FISHING_ROD), 5, 1);
+                }
+                else if (isEqualsItem(e, "&bТелепорт домой")) {
+                    ItemStack teleportStack = new ItemStack(Material.SULPHUR, 1);
+                    ItemMeta teleportMeta = teleportStack.getItemMeta();
+                    teleportMeta.setDisplayName(ColorUtil.getMessage("&bТелепорт домой"));
+                    teleportStack.setItemMeta(teleportMeta);
+                    buyItem(e, Material.IRON_INGOT, teleportStack, 3, 1);
+                }
+                else if (isEqualsItem(e, "&eGPS трекер")) {
+                    ItemStack gpsStack = new ItemStack(Material.COMPASS, 1);
+                    ItemMeta gpsMeta = gpsStack.getItemMeta();
+                    gpsMeta.setDisplayName(ColorUtil.getMessage("&eGPS трекер"));
+                    gpsStack.setItemMeta(gpsMeta);
+                    buyItem(e, Material.IRON_INGOT, gpsStack, 3, 1);
+                }
+                else if (isEqualsItem(e, "&bСпасательная платформа")) {
+                    ItemStack platformStack = new ItemStack(Material.BLAZE_ROD, 1);
+                    ItemMeta platformMeta = platformStack.getItemMeta();
+                    platformMeta.setDisplayName(ColorUtil.getMessage("&bСпасательная платформа"));
+                    platformStack.setItemMeta(platformMeta);
+                    buyItem(e, Material.IRON_INGOT, platformStack, 14, 1);
                 }
                 else if (isEqualsItem(e,"&f← &eНазад")) {
                     Trader.openGlobalMenu((Player) e.getView().getPlayer());

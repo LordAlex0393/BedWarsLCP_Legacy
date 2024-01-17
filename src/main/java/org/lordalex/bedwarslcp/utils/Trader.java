@@ -116,7 +116,7 @@ public class Trader {
 
         ItemStack specialStack = new ItemStack(Material.TNT, 1);
         ItemMeta specialMeta = specialStack.getItemMeta();
-        specialMeta.setDisplayName(ColorUtil.getMessage("&l&bЗелья"));
+        specialMeta.setDisplayName(ColorUtil.getMessage("&l&bСпециальное"));
         List<String> specialList = new ArrayList<>();
         specialList.add(ColorUtil.getMessage("&e-&7 Лестница"));
         specialList.add(ColorUtil.getMessage("&e-&7 Паутина"));
@@ -407,6 +407,69 @@ public class Trader {
 
         inv.setItem(0, appleStack);
         inv.setItem(1, porkStack);
+        inv.setItem(13, bedStack);
+
+        p.openInventory(inv);
+    }
+    public static void openSpecialMenu(Player p){
+        Inventory inv = Bukkit.createInventory(null, 18, "Специальное");
+
+        ItemStack webStack = new ItemStack(Material.WEB, 1);
+        ItemMeta webMeta = webStack.getItemMeta();
+        webMeta.setDisplayName(ColorUtil.getMessage("&fПаутинка"));
+        List<String> webList = new ArrayList<>();
+        webList.add(ColorUtil.getMessage("&dЦена: &624 бронзы"));
+        webMeta.addEnchant(Enchantment.DAMAGE_ALL, 1, true);
+        webMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+        webMeta.setLore(webList);
+        webStack.setItemMeta(webMeta);
+
+        ItemStack fishingRodStack = new ItemStack(Material.FISHING_ROD, 1);
+        ItemMeta fishingRodMeta = fishingRodStack.getItemMeta();
+        fishingRodMeta.setDisplayName(ColorUtil.getMessage("&fУдочка"));
+        List<String> fishingRodList = new ArrayList<>();
+        fishingRodList.add(ColorUtil.getMessage("&dЦена: &f5 железа"));
+        fishingRodMeta.setLore(fishingRodList);
+        fishingRodStack.setItemMeta(fishingRodMeta);
+
+        ItemStack teleportStack = new ItemStack(Material.SULPHUR, 1);
+        ItemMeta teleportMeta = teleportStack.getItemMeta();
+        teleportMeta.setDisplayName(ColorUtil.getMessage("&bТелепорт домой"));
+        List<String> teleportList = new ArrayList<>();
+        teleportList.add(ColorUtil.getMessage("&dЦена: &f3 железа"));
+        teleportMeta.setLore(teleportList);
+        teleportStack.setItemMeta(teleportMeta);
+
+        ItemStack gpsStack = new ItemStack(Material.COMPASS, 1);
+        ItemMeta gpsMeta = gpsStack.getItemMeta();
+        gpsMeta.setDisplayName(ColorUtil.getMessage("&eGPS трекер"));
+        List<String> gpsList = new ArrayList<>();
+        gpsList.add(ColorUtil.getMessage("&dЦена: &f3 железа"));
+        gpsMeta.setLore(gpsList);
+        gpsStack.setItemMeta(gpsMeta);
+
+        ItemStack platformStack = new ItemStack(Material.BLAZE_ROD, 1);
+        ItemMeta platformMeta = platformStack.getItemMeta();
+        platformMeta.setDisplayName(ColorUtil.getMessage("&bСпасательная платформа"));
+        List<String> platformList = new ArrayList<>();
+        platformList.add(ColorUtil.getMessage("&7 Спаси себя от падения!"));
+        platformList.add(ColorUtil.getMessage("&7В течение &f10 секунд &7вы будете"));
+        platformList.add(ColorUtil.getMessage("&7стоять на стеклянной платформе."));
+        platformList.add(ColorUtil.getMessage("&7стоять на стеклянной платформе."));
+        platformList.add(ColorUtil.getMessage("&dЦена: &f14 железа"));
+        platformMeta.setLore(platformList);
+        platformStack.setItemMeta(platformMeta);
+
+        ItemStack bedStack = new ItemStack(Material.BED, 1);
+        ItemMeta bedMeta = bedStack.getItemMeta();
+        bedMeta.setDisplayName(ColorUtil.getMessage("&f← &eНазад"));
+        bedStack.setItemMeta(bedMeta);
+
+        inv.setItem(0, webStack);
+        inv.setItem(1, fishingRodStack);
+        inv.setItem(2, teleportStack);
+        inv.setItem(3, platformStack);
+        inv.setItem(4, gpsStack);
         inv.setItem(13, bedStack);
 
         p.openInventory(inv);
