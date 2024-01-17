@@ -15,7 +15,7 @@ on:
           with:
             host: ${{ secrets.HOST }}
             username: ${{ secrets.USERNAME }}
-            key: ${{ secrets.KEY }}
+            password: ${{ secrets.PASSWORD }}
             port: ${{ secrets.PORT }}
             source: "target/BedWarsLCP-1.0-SNAPSHOT.jar"
             target: "C:\\Users\\orlov\\Documents\\ServerMineTest"
