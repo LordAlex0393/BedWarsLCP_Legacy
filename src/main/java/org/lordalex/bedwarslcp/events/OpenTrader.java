@@ -39,6 +39,9 @@ public class OpenTrader implements Listener {
                 else if(isEqualsItem(e, "&l&bКирки")){
                     Trader.openPickaxeMenu((Player) e.getView().getPlayer());
                 }
+                else if(isEqualsItem(e, "&l&bМечи")){
+                    Trader.openSwordMenu((Player) e.getView().getPlayer());
+                }
                 e.setCancelled(true);
             }
         }
@@ -136,6 +139,64 @@ public class OpenTrader implements Listener {
                     diamond1PickaxeStack.setItemMeta(diamond1PickaxeMeta);
                     buyItem(e, Material.GOLD_INGOT, diamond1PickaxeStack, 8, 1);
                 }
+                else if (isEqualsItem(e,"&f← &eНазад")) {
+                    Trader.openGlobalMenu((Player) e.getView().getPlayer());
+                }
+                e.setCancelled(true);
+            }
+        }
+        else if(e.getView().getTitle().equals("Мечи")) {
+            if (e.getCurrentItem() != null && e.getCurrentItem().getItemMeta() != null) {
+                if (isEqualsItem(e, "&bЖелезный меч")) {
+                    ItemStack ironSwordStack = new ItemStack(Material.IRON_SWORD, 1);
+                    ItemMeta ironSwordMeta = ironSwordStack.getItemMeta();
+                    ironSwordMeta.setDisplayName(ColorUtil.getMessage("&bЖелезный меч"));
+                    ironSwordMeta.addEnchant(Enchantment.DAMAGE_ALL, 1, true);
+                    ironSwordMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+                    ironSwordStack.setItemMeta(ironSwordMeta);
+                    buyItem(e, Material.CLAY_BRICK, ironSwordStack, 3, 1);
+                }
+                else if (isEqualsItem(e, "&aАлмеч")) {
+                    ItemStack diamondSwordStack = new ItemStack(Material.DIAMOND_SWORD, 1);
+                    ItemMeta diamondSwordMeta = diamondSwordStack.getItemMeta();
+                    diamondSwordMeta.setDisplayName(ColorUtil.getMessage("&aАлмеч"));
+                    diamondSwordMeta.addEnchant(Enchantment.DAMAGE_ALL, 1, true);
+                    diamondSwordMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+                    diamondSwordStack.setItemMeta(diamondSwordMeta);
+                    buyItem(e, Material.IRON_INGOT, diamondSwordStack, 1, 1);
+                }
+                else if (isEqualsItem(e, "&bЭкскалибур")){
+                    ItemStack excaliburSwordStack = new ItemStack(Material.DIAMOND_SWORD, 1);
+                    ItemMeta excaliburSwordMeta = excaliburSwordStack.getItemMeta();
+                    excaliburSwordMeta.setDisplayName(ColorUtil.getMessage("&bЭкскалибур"));
+                    excaliburSwordMeta.addEnchant(Enchantment.DAMAGE_ALL, 2, true);
+                    excaliburSwordMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+                    excaliburSwordMeta.addEnchant(Enchantment.KNOCKBACK, 1, true);
+                    excaliburSwordStack.setItemMeta(excaliburSwordMeta);
+                    buyItem(e, Material.IRON_INGOT, excaliburSwordStack, 5, 1);
+                }
+                else if (isEqualsItem(e, "&6Смертоносец")){
+                    ItemStack deathBringerSwordStack = new ItemStack(Material.DIAMOND_SWORD, 1);
+                    ItemMeta deathBringerSwordMeta = deathBringerSwordStack.getItemMeta();
+                    deathBringerSwordMeta.setDisplayName(ColorUtil.getMessage("&6Смертоносец"));
+                    deathBringerSwordMeta.addEnchant(Enchantment.DAMAGE_ALL, 3, true);
+                    deathBringerSwordMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+                    deathBringerSwordMeta.addEnchant(Enchantment.KNOCKBACK, 1, true);
+                    deathBringerSwordStack.setItemMeta(deathBringerSwordMeta);
+                    buyItem(e, Material.GOLD_INGOT, deathBringerSwordStack, 6, 1);
+                }
+                else if (isEqualsItem(e, "&cКиллмагедон")){
+                    ItemStack killmagedonSwordStack = new ItemStack(Material.DIAMOND_SWORD, 1);
+                    ItemMeta killmagedonSwordMeta = killmagedonSwordStack.getItemMeta();
+                    killmagedonSwordMeta.setDisplayName(ColorUtil.getMessage("&cКиллмагедон"));
+                    killmagedonSwordMeta.addEnchant(Enchantment.DAMAGE_ALL, 5, true);
+                    killmagedonSwordMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+                    killmagedonSwordMeta.addEnchant(Enchantment.KNOCKBACK, 2, true);
+                    killmagedonSwordMeta.addEnchant(Enchantment.FIRE_ASPECT, 1, true);
+                    killmagedonSwordStack.setItemMeta(killmagedonSwordMeta);
+                    buyItem(e, Material.GOLD_INGOT, killmagedonSwordStack, 30, 1);
+                }
+
                 else if (isEqualsItem(e,"&f← &eНазад")) {
                     Trader.openGlobalMenu((Player) e.getView().getPlayer());
                 }

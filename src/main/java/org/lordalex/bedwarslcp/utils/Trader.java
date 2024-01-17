@@ -309,4 +309,75 @@ public class Trader {
 
         p.openInventory(inv);
     }
+    public static void openSwordMenu(Player p){
+        Inventory inv = Bukkit.createInventory(null, 18, "Мечи");
+
+        ItemStack ironSwordStack = new ItemStack(Material.IRON_SWORD, 1);
+        ItemMeta ironSwordMeta = ironSwordStack.getItemMeta();
+        ironSwordMeta.setDisplayName(ColorUtil.getMessage("&bЖелезный меч"));
+        List<String> ironSwordList = new ArrayList<>();
+        ironSwordList.add(ColorUtil.getMessage("&dЦена: &63 бронзы"));
+        ironSwordMeta.addEnchant(Enchantment.DAMAGE_ALL, 1, true);
+        ironSwordMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+        ironSwordMeta.setLore(ironSwordList);
+        ironSwordStack.setItemMeta(ironSwordMeta);
+
+        ItemStack diamondSwordStack = new ItemStack(Material.DIAMOND_SWORD, 1);
+        ItemMeta diamondSwordMeta = diamondSwordStack.getItemMeta();
+        diamondSwordMeta.setDisplayName(ColorUtil.getMessage("&aАлмеч"));
+        List<String> diamondSwordList = new ArrayList<>();
+        diamondSwordList.add(ColorUtil.getMessage("&dЦена: &f1 железо"));
+        diamondSwordMeta.addEnchant(Enchantment.DAMAGE_ALL, 1, true);
+        diamondSwordMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+        diamondSwordMeta.setLore(diamondSwordList);
+        diamondSwordStack.setItemMeta(diamondSwordMeta);
+
+        ItemStack excaliburSwordStack = new ItemStack(Material.DIAMOND_SWORD, 1);
+        ItemMeta excaliburSwordMeta = excaliburSwordStack.getItemMeta();
+        excaliburSwordMeta.setDisplayName(ColorUtil.getMessage("&bЭкскалибур"));
+        List<String> excaliburSwordList = new ArrayList<>();
+        excaliburSwordList.add(ColorUtil.getMessage("&dЦена: &f5 железа"));
+        excaliburSwordMeta.addEnchant(Enchantment.DAMAGE_ALL, 2, true);
+        excaliburSwordMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+        excaliburSwordMeta.addEnchant(Enchantment.KNOCKBACK, 1, true);
+        excaliburSwordMeta.setLore(excaliburSwordList);
+        excaliburSwordStack.setItemMeta(excaliburSwordMeta);
+
+        ItemStack deathBringerSwordStack = new ItemStack(Material.DIAMOND_SWORD, 1);
+        ItemMeta deathBringerSwordMeta = deathBringerSwordStack.getItemMeta();
+        deathBringerSwordMeta.setDisplayName(ColorUtil.getMessage("&6Смертоносец"));
+        List<String> deathBringerSwordList = new ArrayList<>();
+        deathBringerSwordList.add(ColorUtil.getMessage("&dЦена: &e6 золота"));
+        deathBringerSwordMeta.addEnchant(Enchantment.DAMAGE_ALL, 3, true);
+        deathBringerSwordMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+        deathBringerSwordMeta.addEnchant(Enchantment.KNOCKBACK, 1, true);
+        deathBringerSwordMeta.setLore(deathBringerSwordList);
+        deathBringerSwordStack.setItemMeta(deathBringerSwordMeta);
+
+        ItemStack killmagedonSwordStack = new ItemStack(Material.DIAMOND_SWORD, 1);
+        ItemMeta killmagedonSwordMeta = killmagedonSwordStack.getItemMeta();
+        killmagedonSwordMeta.setDisplayName(ColorUtil.getMessage("&cКиллмагедон"));
+        List<String> killmagedonSwordList = new ArrayList<>();
+        killmagedonSwordList.add(ColorUtil.getMessage("&dЦена: &e30 золота"));
+        killmagedonSwordMeta.addEnchant(Enchantment.DAMAGE_ALL, 5, true);
+        killmagedonSwordMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+        killmagedonSwordMeta.addEnchant(Enchantment.KNOCKBACK, 2, true);
+        killmagedonSwordMeta.addEnchant(Enchantment.FIRE_ASPECT, 1, true);
+        killmagedonSwordMeta.setLore(killmagedonSwordList);
+        killmagedonSwordStack.setItemMeta(killmagedonSwordMeta);
+
+        ItemStack bedStack = new ItemStack(Material.BED, 1);
+        ItemMeta bedMeta = bedStack.getItemMeta();
+        bedMeta.setDisplayName(ColorUtil.getMessage("&f← &eНазад"));
+        bedStack.setItemMeta(bedMeta);
+
+        inv.setItem(0, ironSwordStack);
+        inv.setItem(1, diamondSwordStack);
+        inv.setItem(2, excaliburSwordStack);
+        inv.setItem(3, deathBringerSwordStack);
+        inv.setItem(4, killmagedonSwordStack);
+        inv.setItem(13, bedStack);
+
+        p.openInventory(inv);
+    }
 }
