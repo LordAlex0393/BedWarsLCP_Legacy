@@ -2,6 +2,7 @@ package org.lordalex.bedwarslcp.events;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -11,9 +12,13 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.lordalex.bedwarslcp.utils.BedWarsUtil;
 import org.lordalex.bedwarslcp.utils.ColorUtil;
 import org.lordalex.bedwarslcp.utils.Trader;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.lordalex.bedwarslcp.BedWarsLCP.mapConfig;
 
@@ -27,6 +32,12 @@ public class OpenTrader implements Listener {
             if(e.getCurrentItem() != null && e.getCurrentItem().getItemMeta() != null){
                 if(isEqualsItem(e, "&l&bБлоки")){
                     Trader.openBlocksMenu((Player) e.getView().getPlayer());
+                }
+                else if(isEqualsItem(e, "&l&bБроня")){
+                    Trader.openArmorMenu((Player) e.getView().getPlayer());
+                }
+                else if(isEqualsItem(e, "&l&bКирки")){
+                    Trader.openPickaxeMenu((Player) e.getView().getPlayer());
                 }
                 e.setCancelled(true);
             }
@@ -52,6 +63,78 @@ public class OpenTrader implements Listener {
                 }
                 else if (isEqualsItem(e, "&fСтекло")) {
                     buyItem(e, Material.CLAY_BRICK, new ItemStack(Material.GLASS), 4, 1);
+                }
+                else if (isEqualsItem(e,"&f← &eНазад")) {
+                    Trader.openGlobalMenu((Player) e.getView().getPlayer());
+                }
+                e.setCancelled(true);
+            }
+        }
+        else if(e.getView().getTitle().equals("Броня")) {
+            if (e.getCurrentItem() != null && e.getCurrentItem().getItemMeta() != null) {
+
+                if (isEqualsItem(e, "&fЖелезный сет")) {
+                    ItemStack ironLegsStack = new ItemStack(Material.IRON_LEGGINGS, 1);
+                    ItemMeta ironLegsMeta = ironLegsStack.getItemMeta();
+                    ironLegsMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
+                    ironLegsStack.setItemMeta(ironLegsMeta);
+
+                    ItemStack ironBootsStack = new ItemStack(Material.IRON_BOOTS, 1);
+                    ItemMeta ironBootsMeta = ironBootsStack.getItemMeta();
+                    ironBootsMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
+                    ironBootsStack.setItemMeta(ironBootsMeta);
+
+                    ItemStack ironHelmetStack = new ItemStack(Material.IRON_HELMET, 1);
+                    ItemMeta ironHelmetMeta = ironHelmetStack.getItemMeta();
+                    ironHelmetMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
+                    ironHelmetStack.setItemMeta(ironHelmetMeta);
+
+                    buyItem(e, Material.CLAY_BRICK, ironHelmetStack, 2, 1);
+                    buyItem(e, Material.CLAY_BRICK, ironLegsStack, 2, 1);
+                    buyItem(e, Material.CLAY_BRICK, ironBootsStack, 2, 1);
+                }
+                else if (isEqualsItem(e, "&aЖелезка уровень 1")) {
+                    ItemStack ironChestplateStack = new ItemStack(Material.IRON_CHESTPLATE, 1);
+                    ItemMeta ironChestplateMeta = ironChestplateStack.getItemMeta();
+                    ironChestplateMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
+                    ironChestplateStack.setItemMeta(ironChestplateMeta);
+                    buyItem(e, Material.IRON_INGOT, ironChestplateStack, 1, 1);
+                }
+                else if (isEqualsItem(e,"&f← &eНазад")) {
+                    Trader.openGlobalMenu((Player) e.getView().getPlayer());
+                }
+                e.setCancelled(true);
+            }
+        }
+        else if(e.getView().getTitle().equals("Кирки")) {
+            if (e.getCurrentItem() != null && e.getCurrentItem().getItemMeta() != null) {
+                if (isEqualsItem(e, "&bКаменная кирка")) {
+                    ItemStack stonePickaxeStack = new ItemStack(Material.STONE_PICKAXE, 1);
+                    ItemMeta stonePickaxeMeta = stonePickaxeStack.getItemMeta();
+                    stonePickaxeMeta.addEnchant(Enchantment.DIG_SPEED, 1, true);
+                    stonePickaxeStack.setItemMeta(stonePickaxeMeta);
+                    buyItem(e, Material.CLAY_BRICK, stonePickaxeStack, 4, 1);
+                }
+                else if (isEqualsItem(e, "&bЖелезная кирка")) {
+                    ItemStack ironPickaxeStack = new ItemStack(Material.IRON_PICKAXE, 1);
+                    ItemMeta ironPickaxeMeta = ironPickaxeStack.getItemMeta();
+                    ironPickaxeMeta.addEnchant(Enchantment.DIG_SPEED, 1, true);
+                    ironPickaxeStack.setItemMeta(ironPickaxeMeta);
+                    buyItem(e, Material.IRON_INGOT, ironPickaxeStack, 2, 1);
+                }
+                else if (isEqualsItem(e, "&bАлмазная кирка") && e.getCurrentItem().getItemMeta().getEnchants().get(Enchantment.DIG_SPEED) == 1) {
+                    ItemStack diamond1PickaxeStack = new ItemStack(Material.DIAMOND_PICKAXE, 1);
+                    ItemMeta diamond1PickaxeMeta = diamond1PickaxeStack.getItemMeta();
+                    diamond1PickaxeMeta.addEnchant(Enchantment.DIG_SPEED, 1, true);
+                    diamond1PickaxeStack.setItemMeta(diamond1PickaxeMeta);
+                    buyItem(e, Material.GOLD_INGOT, diamond1PickaxeStack, 2, 1);
+                }
+                else if (isEqualsItem(e, "&bАлмазная кирка") && e.getCurrentItem().getItemMeta().getEnchants().get(Enchantment.DIG_SPEED) == 3) {
+                    ItemStack diamond1PickaxeStack = new ItemStack(Material.DIAMOND_PICKAXE, 1);
+                    ItemMeta diamond1PickaxeMeta = diamond1PickaxeStack.getItemMeta();
+                    diamond1PickaxeMeta.addEnchant(Enchantment.DIG_SPEED, 3, true);
+                    diamond1PickaxeStack.setItemMeta(diamond1PickaxeMeta);
+                    buyItem(e, Material.GOLD_INGOT, diamond1PickaxeStack, 8, 1);
                 }
                 else if (isEqualsItem(e,"&f← &eНазад")) {
                     Trader.openGlobalMenu((Player) e.getView().getPlayer());

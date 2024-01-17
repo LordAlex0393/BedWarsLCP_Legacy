@@ -3,6 +3,7 @@ package org.lordalex.bedwarslcp.utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.SandstoneType;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -217,6 +218,93 @@ public class Trader {
         inv.setItem(3, ironblockStairsStack);
         inv.setItem(4, glowstoneStairsStack);
         inv.setItem(5, glassStairsStack);
+        inv.setItem(13, bedStack);
+
+        p.openInventory(inv);
+    }
+    public static void openArmorMenu(Player p){
+        Inventory inv = Bukkit.createInventory(null, 18, "Броня");
+
+        ItemStack ironLegsStack = new ItemStack(Material.IRON_LEGGINGS, 1);
+        ItemMeta ironLegsMeta = ironLegsStack.getItemMeta();
+        ironLegsMeta.setDisplayName(ColorUtil.getMessage("&fЖелезный сет"));
+        List<String> ironLegsList = new ArrayList<>();
+        ironLegsList.add(ColorUtil.getMessage("&7Железный шлем"));
+        ironLegsList.add(ColorUtil.getMessage("&7Железные штаны"));
+        ironLegsList.add(ColorUtil.getMessage("&7Железные ботинки"));
+        ironLegsList.add(ColorUtil.getMessage("&dЦена: &66 бронзы"));
+        ironLegsMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
+        ironLegsMeta.setLore(ironLegsList);
+        ironLegsStack.setItemMeta(ironLegsMeta);
+
+        ItemStack ironChestplateStack = new ItemStack(Material.IRON_CHESTPLATE, 1);
+        ItemMeta ironChestplateMeta = ironChestplateStack.getItemMeta();
+        ironChestplateMeta.setDisplayName(ColorUtil.getMessage("&aЖелезка уровень 1"));
+        List<String> ironChestplateList = new ArrayList<>();
+        ironChestplateList.add(ColorUtil.getMessage("&dЦена: &f1 железо"));
+        ironChestplateMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
+        ironChestplateMeta.setLore(ironChestplateList);
+        ironChestplateStack.setItemMeta(ironChestplateMeta);
+
+        ItemStack bedStack = new ItemStack(Material.BED, 1);
+        ItemMeta bedMeta = bedStack.getItemMeta();
+        bedMeta.setDisplayName(ColorUtil.getMessage("&f← &eНазад"));
+        bedStack.setItemMeta(bedMeta);
+
+        inv.setItem(0, ironLegsStack);
+        inv.setItem(1, ironChestplateStack);
+        inv.setItem(13, bedStack);
+
+        p.openInventory(inv);
+    }
+    public static void openPickaxeMenu(Player p){
+        Inventory inv = Bukkit.createInventory(null, 18, "Кирки");
+
+        ItemStack stonePickaxeStack = new ItemStack(Material.STONE_PICKAXE, 1);
+        ItemMeta stonePickaxeMeta = stonePickaxeStack.getItemMeta();
+        stonePickaxeMeta.setDisplayName(ColorUtil.getMessage("&bКаменная кирка"));
+        List<String> stonePickaxeList = new ArrayList<>();
+        stonePickaxeList.add(ColorUtil.getMessage("&dЦена: &64 бронзы"));
+        stonePickaxeMeta.addEnchant(Enchantment.DIG_SPEED, 1, true);
+        stonePickaxeMeta.setLore(stonePickaxeList);
+        stonePickaxeStack.setItemMeta(stonePickaxeMeta);
+
+        ItemStack ironPickaxeStack = new ItemStack(Material.IRON_PICKAXE, 1);
+        ItemMeta ironPickaxeMeta = ironPickaxeStack.getItemMeta();
+        ironPickaxeMeta.setDisplayName(ColorUtil.getMessage("&bЖелезная кирка"));
+        List<String> ironPickaxeList = new ArrayList<>();
+        ironPickaxeList.add(ColorUtil.getMessage("&dЦена: &f2 железа"));
+        ironPickaxeMeta.addEnchant(Enchantment.DIG_SPEED, 1, true);
+        ironPickaxeMeta.setLore(ironPickaxeList);
+        ironPickaxeStack.setItemMeta(ironPickaxeMeta);
+
+        ItemStack diamond1PickaxeStack = new ItemStack(Material.DIAMOND_PICKAXE, 1);
+        ItemMeta diamond1PickaxeMeta = diamond1PickaxeStack.getItemMeta();
+        diamond1PickaxeMeta.setDisplayName(ColorUtil.getMessage("&bАлмазная кирка"));
+        List<String> diamond1PickaxeList = new ArrayList<>();
+        diamond1PickaxeList.add(ColorUtil.getMessage("&dЦена: &e2 золота"));
+        diamond1PickaxeMeta.addEnchant(Enchantment.DIG_SPEED, 1, true);
+        diamond1PickaxeMeta.setLore(diamond1PickaxeList);
+        diamond1PickaxeStack.setItemMeta(diamond1PickaxeMeta);
+
+        ItemStack diamond2PickaxeStack = new ItemStack(Material.DIAMOND_PICKAXE, 1);
+        ItemMeta diamond2PickaxeMeta = diamond2PickaxeStack.getItemMeta();
+        diamond2PickaxeMeta.setDisplayName(ColorUtil.getMessage("&bАлмазная кирка"));
+        List<String> diamond2PickaxeList = new ArrayList<>();
+        diamond2PickaxeList.add(ColorUtil.getMessage("&dЦена: &e8 золота"));
+        diamond2PickaxeMeta.addEnchant(Enchantment.DIG_SPEED, 3, true);
+        diamond2PickaxeMeta.setLore(diamond2PickaxeList);
+        diamond2PickaxeStack.setItemMeta(diamond2PickaxeMeta);
+
+        ItemStack bedStack = new ItemStack(Material.BED, 1);
+        ItemMeta bedMeta = bedStack.getItemMeta();
+        bedMeta.setDisplayName(ColorUtil.getMessage("&f← &eНазад"));
+        bedStack.setItemMeta(bedMeta);
+
+        inv.setItem(0, stonePickaxeStack);
+        inv.setItem(1, ironPickaxeStack);
+        inv.setItem(2, diamond1PickaxeStack);
+        inv.setItem(3, diamond2PickaxeStack);
         inv.setItem(13, bedStack);
 
         p.openInventory(inv);
