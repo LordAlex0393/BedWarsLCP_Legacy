@@ -48,7 +48,7 @@ public final class BedWarsLCP extends JavaPlugin {
 
         Bukkit.getPluginManager().registerEvents(new SavingPlatform(), this);
         Bukkit.getPluginManager().registerEvents(new TrackerGPS(), this);
-        Bukkit.getPluginManager().registerEvents(new TeleportationDust(), this);
+        //Bukkit.getPluginManager().registerEvents(new TeleportationDust(), this);
         Bukkit.getPluginManager().registerEvents(new OpenTrader(), this);
         Bukkit.getPluginManager().registerEvents(new BedWarsEvents(), this);
         Bukkit.getPluginManager().registerEvents(new onBlockBreak(), this);
