@@ -10,6 +10,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -156,6 +157,12 @@ public class BedWarsEvents implements Listener {
     @EventHandler
     public void onMonster(CreatureSpawnEvent e){
         if(e.getEntity().getType() == null || e.getEntity().getType() != EntityType.VILLAGER){
+            e.setCancelled(true);
+        }
+    }
+    @EventHandler
+    public void onEntityDamage(EntityDamageEvent e){
+        if(!isStarted){
             e.setCancelled(true);
         }
     }
