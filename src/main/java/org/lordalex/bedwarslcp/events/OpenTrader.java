@@ -1,5 +1,6 @@
 package org.lordalex.bedwarslcp.events;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -10,26 +11,27 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
+import org.lordalex.bedwarslcp.utils.BedWarsUtil;
 import org.lordalex.bedwarslcp.utils.ColorUtil;
 import org.lordalex.bedwarslcp.utils.Trader;
+
+import static org.lordalex.bedwarslcp.BedWarsLCP.mapConfig;
 
 public class OpenTrader implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent e){
         if(e == null) return;
         Player p = (Player) e.getView().getPlayer();
-        if(e.getView().getTitle().equals("Торговец")){
-            if(e.getCurrentItem() != null
-                    && e.getCurrentItem().getItemMeta() != null
-                    && e.getCurrentItem().getItemMeta().getDisplayName().equals(ColorUtil.getMessage("&l&bБлоки"))){
-                Trader.openBlocksMenu((Player) e.getView().getPlayer());
-            }
-            e.setCancelled(true);
-        }
-        int materialAmount;
-        int itemAmount;
 
-        if(e.getView().getTitle().equals("Блоки")) {
+        if(e.getView().getTitle().equals("Торговец")){
+            if(e.getCurrentItem() != null && e.getCurrentItem().getItemMeta() != null){
+                if(isEqualsItem(e, "&l&bБлоки")){
+                    Trader.openBlocksMenu((Player) e.getView().getPlayer());
+                }
+                e.setCancelled(true);
+            }
+        }
+        else if(e.getView().getTitle().equals("Блоки")) {
             if (e.getCurrentItem() != null && e.getCurrentItem().getItemMeta() != null) {
 
                 if (isEqualsItem(e, "&fГладкий песчаник")) {
@@ -44,7 +46,8 @@ public class OpenTrader implements Listener {
                 }
                 else if (isEqualsItem(e, "&fЖелезный блок")) {
                     buyItem(e, Material.IRON_INGOT, new ItemStack(Material.IRON_BLOCK), 3, 1);
-                } else if (isEqualsItem(e, "&fСветящийся камень")) {
+                }
+                else if (isEqualsItem(e, "&fСветящийся камень")) {
                     buyItem(e, Material.CLAY_BRICK, new ItemStack(Material.GLOWSTONE), 16, 4);
                 }
                 else if (isEqualsItem(e, "&fСтекло")) {
@@ -52,11 +55,12 @@ public class OpenTrader implements Listener {
                 }
                 else if (isEqualsItem(e,"&f← &eНазад")) {
                     Trader.openGlobalMenu((Player) e.getView().getPlayer());
-                    e.setCancelled(true);
                 }
+                e.setCancelled(true);
             }
         }
     }
+
     @EventHandler
     public void onTrade(PlayerInteractEntityEvent e){
         Entity ent = e.getRightClicked();
@@ -87,7 +91,12 @@ public class OpenTrader implements Listener {
         return (e.getClick() == ClickType.SHIFT_LEFT || e.getClick() == ClickType.SHIFT_RIGHT);
     }
     private boolean isEqualsItem(InventoryClickEvent e, String itemDisplayName){
-        return e.getCurrentItem().getItemMeta().getDisplayName().equals(ColorUtil.getMessage(itemDisplayName));
+        if(e.getCurrentItem().getItemMeta().getDisplayName() != null) {
+            return e.getCurrentItem().getItemMeta().getDisplayName().equals(ColorUtil.getMessage(itemDisplayName));
+        }
+        else{
+            return false;
+        }
     }
     private boolean buyItemShift(Player p, Material material, ItemStack item, int materialAmount, int itemAmount){
         int factor = 10;

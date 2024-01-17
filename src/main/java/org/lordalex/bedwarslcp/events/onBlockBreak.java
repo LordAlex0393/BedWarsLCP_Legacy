@@ -11,11 +11,8 @@ import static org.lordalex.bedwarslcp.BedWarsLCP.allowedToBreak;
 public class onBlockBreak implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
-        if(!allowedToBreak.contains(e.getBlock().getType())){
+        if((!allowedToBreak.contains(e.getBlock().getType())) && e.getPlayer().getGameMode() != GameMode.CREATIVE){
             e.setCancelled(true);
         }
-//        else if(e.getPlayer().getGameMode() == GameMode.SURVIVAL){
-//            e.setCancelled(true);
-//        }
     }
 }

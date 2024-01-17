@@ -111,6 +111,7 @@ public class BedWarsEvents implements Listener {
                     p.getInventory().clear();
                     int spawnIndex = (int) (Math.random() * mapConfig.getTeams().get(userTeam.get(p.getUniqueId())).getSpawns().size()-1);
                     Location location = BedWarsUtil.parseLocation(p.getWorld(), mapConfig.getTeams().get(userTeam.get(p.getUniqueId())).getSpawns().get(spawnIndex));
+                    p.getInventory().removeItem(new ItemStack(Material.NAME_TAG, 1));
                     p.teleport(location);
                 }
                 if(isEqualsItem(e, "&eЖелтая команда")){
@@ -118,6 +119,7 @@ public class BedWarsEvents implements Listener {
                     p.getInventory().clear();
                     int spawnIndex = (int) (Math.random() * mapConfig.getTeams().get(userTeam.get(p.getUniqueId())).getSpawns().size()-1);
                     Location location = BedWarsUtil.parseLocation(p.getWorld(), mapConfig.getTeams().get(userTeam.get(p.getUniqueId())).getSpawns().get(spawnIndex));
+                    p.getInventory().removeItem(new ItemStack(Material.NAME_TAG, 1));
                     p.teleport(location);
                 }
                 else if(isEqualsItem(e, "&cКрасная команда")){
@@ -125,6 +127,7 @@ public class BedWarsEvents implements Listener {
                     p.getInventory().clear();
                     int spawnIndex = (int) (Math.random() * mapConfig.getTeams().get(userTeam.get(p.getUniqueId())).getSpawns().size()-1);
                     Location location = BedWarsUtil.parseLocation(p.getWorld(), mapConfig.getTeams().get(userTeam.get(p.getUniqueId())).getSpawns().get(spawnIndex));
+                    p.getInventory().removeItem(new ItemStack(Material.NAME_TAG, 1));
                     p.teleport(location);
                 }
                 else if(isEqualsItem(e, "&9Синяя команда")){
@@ -132,19 +135,14 @@ public class BedWarsEvents implements Listener {
                     p.getInventory().clear();
                     int spawnIndex = (int) (Math.random() * mapConfig.getTeams().get(userTeam.get(p.getUniqueId())).getSpawns().size()-1);
                     Location location = BedWarsUtil.parseLocation(p.getWorld(), mapConfig.getTeams().get(userTeam.get(p.getUniqueId())).getSpawns().get(spawnIndex));
+                    p.getInventory().removeItem(new ItemStack(Material.NAME_TAG, 1));
                     p.teleport(location);
                 }
-                else{
-                    e.setCancelled(true);
-                    return;
-                }
-                p.getInventory().removeItem(new ItemStack(Material.NAME_TAG, 1));
-                //p.damage(10000000);
+                e.setCancelled(true);
             }
-            e.setCancelled(true);
         }
-
     }
+
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent e){
         Player p = e.getPlayer();
@@ -162,7 +160,12 @@ public class BedWarsEvents implements Listener {
         }
     }
     private boolean isEqualsItem(InventoryClickEvent e, String itemDisplayName){
-        return e.getCurrentItem().getItemMeta().getDisplayName().equals(ColorUtil.getMessage(itemDisplayName));
+        if(e.getCurrentItem().getItemMeta().getDisplayName() != null) {
+            return e.getCurrentItem().getItemMeta().getDisplayName().equals(ColorUtil.getMessage(itemDisplayName));
+        }
+        else{
+            return false;
+        }
     }
     public void disband(){
         userTeam = new HashMap<>();
