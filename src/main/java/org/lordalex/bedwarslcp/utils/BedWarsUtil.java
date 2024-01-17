@@ -116,7 +116,7 @@ public class BedWarsUtil {
                 vil.setCustomName(ChatColor.YELLOW + "Торговец");
                 vil.setCustomNameVisible(true);
                 vil.setAdult();
-                vil.setNoDamageTicks(200);
+                vil.setNoDamageTicks(36000);
             }
         }
     }

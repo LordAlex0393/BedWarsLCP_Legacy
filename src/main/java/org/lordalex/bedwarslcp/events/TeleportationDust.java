@@ -58,14 +58,11 @@ public class TeleportationDust implements Listener{
             teleport.cancel();
         }
     }
-
     private void teleportByDust(Player p) {
-        int max = 20;
-        int min = 5;
         int y = 255;
         Location loc = p.getLocation();
-        loc.setX(loc.getX() + (Math.random() * (max - min)) + min);
-        loc.setZ(loc.getZ() + (Math.random() * (max - min)) + min);
+        loc.setX(500);
+        loc.setZ(500);
         loc.setY(y);
         Location tpLoc = loc.clone();
         while(tpLoc.getBlock().getType() == Material.AIR){
@@ -75,4 +72,21 @@ public class TeleportationDust implements Listener{
         loc.setY(y+2);
         p.teleport(loc);
     }
+
+//    private void teleportByDust(Player p) {
+//        int max = 20;
+//        int min = 5;
+//        int y = 255;
+//        Location loc = p.getLocation();
+//        loc.setX(loc.getX() + (Math.random() * (max - min)) + min);
+//        loc.setZ(loc.getZ() + (Math.random() * (max - min)) + min);
+//        loc.setY(y);
+//        Location tpLoc = loc.clone();
+//        while(tpLoc.getBlock().getType() == Material.AIR){
+//            tpLoc.setY(y);
+//            y--;
+//        }
+//        loc.setY(y+2);
+//        p.teleport(loc);
+//    }
 }

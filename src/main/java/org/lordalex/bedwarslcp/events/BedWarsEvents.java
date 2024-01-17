@@ -170,4 +170,12 @@ public class BedWarsEvents implements Listener {
     public void disband(){
         userTeam = new HashMap<>();
     }
+
+    public HashMap<UUID, String> getUserTeam() {
+        return userTeam;
+    }
+
+    public void setUserTeam(HashMap<UUID, String> userTeam) {
+        this.userTeam = userTeam;
+    }
 }
