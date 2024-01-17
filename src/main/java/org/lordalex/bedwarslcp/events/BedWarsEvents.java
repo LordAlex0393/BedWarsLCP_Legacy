@@ -1,12 +1,15 @@
 package org.lordalex.bedwarslcp.events;
 
 import org.bukkit.*;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -120,6 +123,12 @@ public class BedWarsEvents implements Listener {
         Player p = e.getPlayer();
         //p.teleport(new Location(p.getWorld(), 571.5, 62, 475.5));
         e.setRespawnLocation(new Location(p.getWorld(), 571.5, 62, 475.5));
+    }
+    @EventHandler
+    public void onMonster(CreatureSpawnEvent e){
+        if(e.getEntity().getType() == null || e.getEntity().getType() != EntityType.VILLAGER){
+            e.setCancelled(true);
+        }
     }
     private boolean isEqualsItem(InventoryClickEvent e, String itemDisplayName){
         return e.getCurrentItem().getItemMeta().getDisplayName().equals(ColorUtil.getMessage(itemDisplayName));

@@ -138,20 +138,20 @@ public class OpenTrader implements Listener {
             Trader.openGlobalMenu(e.getPlayer());
         }
     }
-    @EventHandler
-    public void onVillagerSpawn(PlayerInteractEvent e){
-        if(e.getItem() == null) return;
-        if (!(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
-        if (!(e.getItem().getType() == Material.MONSTER_EGG)) return;
-        Player p = e.getPlayer();
-        e.setCancelled(true);
-        Villager vil = (Villager) p.getLocation().getWorld().spawnEntity(p.getLocation(),EntityType.VILLAGER);
-        vil.setCustomName(ChatColor.YELLOW + "Торговец");
-        vil.setCustomNameVisible(true);
-        //vil.setAI(false);
-        vil.setAdult();
-        vil.setNoDamageTicks(200);
-    }
+//    @EventHandler
+//    public void onVillagerSpawn(PlayerInteractEvent e){
+//        if(e.getItem() == null) return;
+//        if (!(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
+//        if (!(e.getItem().getType() == Material.MONSTER_EGG)) return;
+//        Player p = e.getPlayer();
+//        e.setCancelled(true);
+//        Villager vil = (Villager) p.getLocation().getWorld().spawnEntity(p.getLocation(),EntityType.VILLAGER);
+//        vil.setCustomName(ChatColor.YELLOW + "Торговец");
+//        vil.setCustomNameVisible(true);
+//        //vil.setAI(false);
+//        vil.setAdult();
+//        vil.setNoDamageTicks(200);
+//    }
 
     private boolean checkItem(Player p, Material mat, int amount){
         return p.getInventory().containsAtLeast(new ItemStack(mat), amount);

@@ -6,6 +6,7 @@ org\lordalex\bedwarslcp\commands\StartCommand.class
 org\lordalex\bedwarslcp\utils\BedWarsUtil.class
 org\lordalex\bedwarslcp\utils\BedWarsUtil$1.class
 org\lordalex\bedwarslcp\utils\YmlPaser.class
+org\lordalex\bedwarslcp\events\onBlockBreak.class
 org\lordalex\bedwarslcp\events\TeleportationDust.class
 org\lordalex\bedwarslcp\events\TrackerGPS.class
 org\lordalex\bedwarslcp\utils\BedWarsTeam.class
