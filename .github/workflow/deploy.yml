@@ -29,4 +29,4 @@ on:
             key: ${{ secrets.KEY }}
             port: ${{ secrets.PORT }}
             source: "target/BedWarsLCP-1.0-SNAPSHOT.jar"
-            target: "C:\Users\orlov\Documents\ServerMineTest"
+            target: "C:\\Users\\orlov\\Documents\\ServerMineTest"
