@@ -20,6 +20,7 @@ public class TrackerGPS implements Listener{
     }
     @EventHandler
     public void onClick(PlayerInteractEvent e) {
+        if(e.getItem() == null) return;
         if (!(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
         if (!(e.getItem().getType() == Material.COMPASS)) return;
         Player p = e.getPlayer();

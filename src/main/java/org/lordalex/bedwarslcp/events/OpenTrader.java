@@ -139,8 +139,8 @@ public class OpenTrader implements Listener {
         }
     }
     @EventHandler
-    public void onSpawn(PlayerInteractEvent e){
-
+    public void onVillagerSpawn(PlayerInteractEvent e){
+        if(e.getItem() == null) return;
         if (!(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
         if (!(e.getItem().getType() == Material.MONSTER_EGG)) return;
         Player p = e.getPlayer();

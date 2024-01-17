@@ -6,49 +6,22 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.lordalex.bedwarslcp.BedWarsLCP;
 import org.lordalex.bedwarslcp.utils.ColorUtil;
 import org.spigotmc.event.player.PlayerSpawnLocationEvent;
 
-import static org.lordalex.bedwarslcp.BedWarsLCP.allowedToBreak;
-import static org.lordalex.bedwarslcp.BedWarsLCP.mapConfig;
+import static org.lordalex.bedwarslcp.BedWarsLCP.*;
 
 public class BedWarsEvents implements Listener {
-
-//    @EventHandler
-//    public void onSpawn(PlayerJoinEvent e){
-//        Player p = e.getPlayer();
-//        if(BedWarsLCP.isStarted){
-//            HashMap<String, BedWarsTeam> hm = mapConfig.getTeams();
-//            for(String key : hm.keySet()){
-//                for (String position : hm.get(key).getIronSpawns()) {
-//                    String[] coordinates = position.split(", ");
-//                    double X = Double.parseDouble(coordinates[0]);
-//                    double Y = Double.parseDouble(coordinates[1]);
-//                    double Z = Double.parseDouble(coordinates[2]);
-//                    Location location = new Location(p.getWorld(), X, Y, Z);
-//                    p.sendMessage(position);
-//                    p.teleport(location);
-//                }
-//            }
-//        }
-//        else{
-//            String position = mapConfig.getLobby();
-//            String[] coordinates = position.split(", ");
-//            double X = Double.parseDouble(coordinates[0]);
-//            double Y = Double.parseDouble(coordinates[1]);
-//            double Z = Double.parseDouble(coordinates[2]);
-//            Location location = new Location(p.getWorld(), X, Y, Z);
-//            p.sendMessage(position);
-//            p.teleport(location);
-//        }
-//    }
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent event)
     {
@@ -73,8 +46,10 @@ public class BedWarsEvents implements Listener {
         }
     }
     @EventHandler
-    public void onClick(PlayerInteractEvent e) {
+    public void onTeamMenuClick(PlayerInteractEvent e) {
+
         Player p = e.getPlayer();
+        if(e.getItem() == null) return;
         if (!(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
         if (!(e.getItem().getType() == Material.NAME_TAG)) return;
 
@@ -108,7 +83,7 @@ public class BedWarsEvents implements Listener {
         p.openInventory(inv);
     }
     @EventHandler
-    public void onClick(InventoryClickEvent e){
+    public void onTeamColorClick(InventoryClickEvent e){
         if(e == null) return;
         Player p = (Player) e.getView().getPlayer();
 
@@ -116,6 +91,8 @@ public class BedWarsEvents implements Listener {
             if(e.getCurrentItem() != null && e.getCurrentItem().getItemMeta() != null){
                 if(isEqualsItem(e, "&aЗеленая команда")){
                     //TeamConfig.teamMap.put(p.getUniqueId(), "green");
+                    //p.getInventory().removeItem(new ItemStack(Material.NAME_TAG, 1));
+                    p.getInventory().clear();
                     p.teleport(new Location(p.getWorld(), 571.5, 62, 475.5));
                 }
                 if(isEqualsItem(e, "&eЖелтая команда")){
@@ -138,23 +115,13 @@ public class BedWarsEvents implements Listener {
         }
 
     }
-
     @EventHandler
-    public void onBlockBreak(BlockBreakEvent e) {
-        if(!e.getPlayer().isOp()){
-            e.setCancelled(true);
-        }
-        if(!allowedToBreak.contains(e.getBlock().getType())){
-            e.setCancelled(true);
-        }
-
+    public void onPlayerRespawn(PlayerRespawnEvent e){
+        Player p = e.getPlayer();
+        //p.teleport(new Location(p.getWorld(), 571.5, 62, 475.5));
+        e.setRespawnLocation(new Location(p.getWorld(), 571.5, 62, 475.5));
     }
     private boolean isEqualsItem(InventoryClickEvent e, String itemDisplayName){
         return e.getCurrentItem().getItemMeta().getDisplayName().equals(ColorUtil.getMessage(itemDisplayName));
     }
-    @EventHandler
-    public void onPlayerSpawn(PlayerSpawnLocationEvent e){
-        e.getPlayer().sendMessage("SPAWN");
-    }
-
 }

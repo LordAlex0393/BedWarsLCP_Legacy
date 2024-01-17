@@ -29,6 +29,7 @@ public class SavingPlatform implements Listener {
     @EventHandler
     public void platformCreating(PlayerInteractEvent e) {
 
+        if(e.getItem() == null) return;
         if (!(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
         if (!(e.getItem().getType() == Material.BLAZE_ROD)) return;
         Player p = e.getPlayer();

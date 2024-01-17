@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.event.world.WorldInitEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -25,10 +26,11 @@ public final class BedWarsLCP extends JavaPlugin {
     public static boolean isStarted = false;
     public static MapConfig mapConfig;
     public static HashSet<Material> allowedToBreak;
+    public static HashSet<Block> placedBlocksSet;
     @Override
     public void onEnable() {
         instance = this;
-        System.out.println("PLUGIN ACTIVATED!");
+        System.out.println("BedWarsLCP by _Lord_ALex_ is loaded");
 
         File file = new File("plugins\\BedWarsLCP\\MastebrConfig.yml");
         mapConfig = YmlPaser.parseMapConfig(file);

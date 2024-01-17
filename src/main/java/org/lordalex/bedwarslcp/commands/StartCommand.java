@@ -1,8 +1,10 @@
 package org.lordalex.bedwarslcp.commands;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -52,6 +54,14 @@ public class StartCommand implements CommandExecutor{
                 }
             }
             sender.sendMessage("BedWars was stopped");
+            return true;
+        }
+        else if(args[0].equalsIgnoreCase("reset") && sender.isOp()){
+            Player p = (Player) sender;
+            for(Block block : BedWarsLCP.placedBlocksSet){
+                block.setType(Material.AIR);
+            }
+            sender.sendMessage("BedWars reset");
             return true;
         }
         else if(args[0].equalsIgnoreCase("clear") && sender.isOp()){
