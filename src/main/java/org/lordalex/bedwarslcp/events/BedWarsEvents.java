@@ -19,12 +19,24 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.lordalex.bedwarslcp.BedWarsLCP;
+import org.lordalex.bedwarslcp.utils.BedWarsUtil;
 import org.lordalex.bedwarslcp.utils.ColorUtil;
+import org.lordalex.bedwarslcp.utils.UserTeam;
 import org.spigotmc.event.player.PlayerSpawnLocationEvent;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 import static org.lordalex.bedwarslcp.BedWarsLCP.*;
 
+
 public class BedWarsEvents implements Listener {
+    private final HashMap<UUID, String> userTeam;
+
+    public BedWarsEvents() {
+        userTeam = new HashMap<>();
+    }
+
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent event)
     {
@@ -95,19 +107,32 @@ public class BedWarsEvents implements Listener {
         if(e.getView().getTitle().equals("Выбор команды")){
             if(e.getCurrentItem() != null && e.getCurrentItem().getItemMeta() != null){
                 if(isEqualsItem(e, "&aЗеленая команда")){
-                    //TeamConfig.teamMap.put(p.getUniqueId(), "green");
-                    //p.getInventory().removeItem(new ItemStack(Material.NAME_TAG, 1));
+                    userTeam.put(p.getUniqueId(), "green");
                     p.getInventory().clear();
-                    p.teleport(new Location(p.getWorld(), 571.5, 62, 475.5));
+                    int spawnIndex = (int) (Math.random() * mapConfig.getTeams().get(userTeam.get(p.getUniqueId())).getSpawns().size()-1);
+                    Location location = BedWarsUtil.parseLocation(p.getWorld(), mapConfig.getTeams().get(userTeam.get(p.getUniqueId())).getSpawns().get(spawnIndex));
+                    p.teleport(location);
                 }
                 if(isEqualsItem(e, "&eЖелтая команда")){
-                    //TeamConfig.teamMap.put(p.getUniqueId(), "yellow");
+                    userTeam.put(p.getUniqueId(), "yellow");
+                    p.getInventory().clear();
+                    int spawnIndex = (int) (Math.random() * mapConfig.getTeams().get(userTeam.get(p.getUniqueId())).getSpawns().size()-1);
+                    Location location = BedWarsUtil.parseLocation(p.getWorld(), mapConfig.getTeams().get(userTeam.get(p.getUniqueId())).getSpawns().get(spawnIndex));
+                    p.teleport(location);
                 }
                 else if(isEqualsItem(e, "&cКрасная команда")){
-                    //TeamConfig.teamMap.put(p.getUniqueId(), "red");
+                    userTeam.put(p.getUniqueId(), "red");
+                    p.getInventory().clear();
+                    int spawnIndex = (int) (Math.random() * mapConfig.getTeams().get(userTeam.get(p.getUniqueId())).getSpawns().size()-1);
+                    Location location = BedWarsUtil.parseLocation(p.getWorld(), mapConfig.getTeams().get(userTeam.get(p.getUniqueId())).getSpawns().get(spawnIndex));
+                    p.teleport(location);
                 }
                 else if(isEqualsItem(e, "&9Синяя команда")){
-                    //TeamConfig.teamMap.put(p.getUniqueId(), "blue");
+                    userTeam.put(p.getUniqueId(), "blue");
+                    p.getInventory().clear();
+                    int spawnIndex = (int) (Math.random() * mapConfig.getTeams().get(userTeam.get(p.getUniqueId())).getSpawns().size()-1);
+                    Location location = BedWarsUtil.parseLocation(p.getWorld(), mapConfig.getTeams().get(userTeam.get(p.getUniqueId())).getSpawns().get(spawnIndex));
+                    p.teleport(location);
                 }
                 else{
                     e.setCancelled(true);
@@ -123,8 +148,10 @@ public class BedWarsEvents implements Listener {
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent e){
         Player p = e.getPlayer();
-        //p.teleport(new Location(p.getWorld(), 571.5, 62, 475.5));
-        e.setRespawnLocation(new Location(p.getWorld(), 571.5, 62, 475.5));
+        int spawnIndex = (int) (Math.random() * mapConfig.getTeams().get(userTeam.get(p.getUniqueId())).getSpawns().size()-1);
+        Location location = BedWarsUtil.parseLocation(p.getWorld(), mapConfig.getTeams().get(userTeam.get(p.getUniqueId())).getSpawns().get(spawnIndex));
+        e.setRespawnLocation(location);
+        //e.setRespawnLocation(new Location(p.getWorld(), 571.5, 62, 475.5));
     }
     @EventHandler
     public void onMonster(CreatureSpawnEvent e){

@@ -36,6 +36,7 @@ public class StartCommand implements CommandExecutor{
             sender.sendMessage(COMMAND_LIST);
         }
         else if(args[0].equalsIgnoreCase("start") && sender.isOp()){
+            stopGame(sender);
             BedWarsLCP.isStarted = true;
             BedWarsUtil.start(sender);
             sender.sendMessage("BedWars was started");

@@ -21,11 +21,13 @@ import java.nio.charset.StandardCharsets;
 import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.UUID;
 
 import static jdk.xml.internal.SecuritySupport.getClassLoader;
 import static org.lordalex.bedwarslcp.BedWarsLCP.mapConfig;
 
 public class BedWarsUtil {
+    //public static HashSet<UserTeam> USER_TEAM;
     public static void start(CommandSender sender){
         spawnVillagers(sender, mapConfig);
         new BukkitRunnable() {
@@ -70,11 +72,7 @@ public class BedWarsUtil {
         World world = p.getWorld();
 
         for (String position : mapConfig.getGoldSpawns()) {
-            String[] coordinates = position.split(", ");
-            double X = Double.parseDouble(coordinates[0]);
-            double Y = Double.parseDouble(coordinates[1]);
-            double Z = Double.parseDouble(coordinates[2]);
-            Location location = new Location(world, X, Y, Z);
+            Location location = parseLocation(world, position);
             Item dropitem = world.dropItem(location, new ItemStack(Material.GOLD_INGOT, 1));
             dropitem.setVelocity(dropitem.getVelocity().zero());
         }
@@ -86,11 +84,7 @@ public class BedWarsUtil {
         HashMap<String, BedWarsTeam> hm = mapConfig.getTeams();
         for(String key : hm.keySet()){
             for (String position : hm.get(key).getIronSpawns()) {
-                String[] coordinates = position.split(", ");
-                double X = Double.parseDouble(coordinates[0]);
-                double Y = Double.parseDouble(coordinates[1]);
-                double Z = Double.parseDouble(coordinates[2]);
-                Location location = new Location(world, X, Y, Z);
+                Location location = parseLocation(world, position);
                 Item dropitem = world.dropItem(location, new ItemStack(Material.IRON_INGOT, 1));
                 dropitem.setVelocity(dropitem.getVelocity().zero());
             }
@@ -103,11 +97,7 @@ public class BedWarsUtil {
         HashMap<String, BedWarsTeam> hm = mapConfig.getTeams();
         for(String key : hm.keySet()){
             for (String position : hm.get(key).getBronzeSpawns()) {
-                String[] coordinates = position.split(", ");
-                double X = Double.parseDouble(coordinates[0]);
-                double Y = Double.parseDouble(coordinates[1]);
-                double Z = Double.parseDouble(coordinates[2]);
-                Location location = new Location(world, X, Y, Z);
+                Location location = parseLocation(world, position);
                 Item dropitem = world.dropItem(location, new ItemStack(Material.CLAY_BRICK, 1));
                 dropitem.setVelocity(dropitem.getVelocity().zero());
             }
@@ -120,11 +110,7 @@ public class BedWarsUtil {
         HashMap<String, BedWarsTeam> hm = mapConfig.getTeams();
         for(String key : hm.keySet()){
             for (String position : hm.get(key).getVillagers()) {
-                String[] coordinates = position.split(", ");
-                double X = Double.parseDouble(coordinates[0]);
-                double Y = Double.parseDouble(coordinates[1]);
-                double Z = Double.parseDouble(coordinates[2]);
-                Location location = new Location(world, X, Y, Z);
+                Location location = parseLocation(world, position);
 
                 Villager vil = (Villager) location.getWorld().spawnEntity(location, EntityType.VILLAGER);
                 vil.setCustomName(ChatColor.YELLOW + "Торговец");
@@ -133,5 +119,13 @@ public class BedWarsUtil {
                 vil.setNoDamageTicks(200);
             }
         }
+    }
+    public static Location parseLocation(World world, String position){
+        String[] coordinates = position.split(", ");
+        double X = Double.parseDouble(coordinates[0]);
+        double Y = Double.parseDouble(coordinates[1]);
+        double Z = Double.parseDouble(coordinates[2]);
+        Location location = new Location(world, X, Y, Z);
+        return location;
     }
 }
