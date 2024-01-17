@@ -16,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.SpawnEgg;
 import org.lordalex.bedwarslcp.BedWarsLCP;
+import org.lordalex.bedwarslcp.events.BedWarsEvents;
 import org.lordalex.bedwarslcp.utils.BedWarsUtil;
 import org.lordalex.bedwarslcp.utils.ColorUtil;
 

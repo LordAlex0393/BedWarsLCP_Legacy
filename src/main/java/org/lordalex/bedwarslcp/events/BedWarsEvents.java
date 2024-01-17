@@ -31,7 +31,7 @@ import static org.lordalex.bedwarslcp.BedWarsLCP.*;
 
 
 public class BedWarsEvents implements Listener {
-    private final HashMap<UUID, String> userTeam;
+    private HashMap<UUID, String> userTeam;
 
     public BedWarsEvents() {
         userTeam = new HashMap<>();
@@ -148,10 +148,12 @@ public class BedWarsEvents implements Listener {
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent e){
         Player p = e.getPlayer();
-        int spawnIndex = (int) (Math.random() * mapConfig.getTeams().get(userTeam.get(p.getUniqueId())).getSpawns().size()-1);
-        Location location = BedWarsUtil.parseLocation(p.getWorld(), mapConfig.getTeams().get(userTeam.get(p.getUniqueId())).getSpawns().get(spawnIndex));
-        e.setRespawnLocation(location);
-        //e.setRespawnLocation(new Location(p.getWorld(), 571.5, 62, 475.5));
+        if(userTeam.containsKey(p.getUniqueId())) {
+            int spawnIndex = (int) (Math.random() * mapConfig.getTeams().get(userTeam.get(p.getUniqueId())).getSpawns().size() - 1);
+            Location location = BedWarsUtil.parseLocation(p.getWorld(), mapConfig.getTeams().get(userTeam.get(p.getUniqueId())).getSpawns().get(spawnIndex));
+            e.setRespawnLocation(location);
+            //e.setRespawnLocation(new Location(p.getWorld(), 571.5, 62, 475.5));
+        }
     }
     @EventHandler
     public void onMonster(CreatureSpawnEvent e){
@@ -161,5 +163,8 @@ public class BedWarsEvents implements Listener {
     }
     private boolean isEqualsItem(InventoryClickEvent e, String itemDisplayName){
         return e.getCurrentItem().getItemMeta().getDisplayName().equals(ColorUtil.getMessage(itemDisplayName));
+    }
+    public void disband(){
+        userTeam = new HashMap<>();
     }
 }

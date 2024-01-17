@@ -3,6 +3,5 @@ version: '${project.version}'
 main: org.lordalex.bedwarslcp.BedWarsLCP
 commands:
   bw:
-    start:
-    kit:
-    set:
+    usage: "/bw help"
+  kill:
