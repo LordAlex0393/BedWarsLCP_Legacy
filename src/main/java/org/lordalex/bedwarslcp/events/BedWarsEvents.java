@@ -227,6 +227,7 @@ public class BedWarsEvents implements Listener {
                                 p.sendMessage(ColorUtil.getMessage("&fИгрок " + COLOR_CODE.get(userTeam.get(p.getUniqueId())) + p.getName()
                                         + "&f разрушил " + COLOR_CODE.get(key) + COLOR_STRING.get(key) + " кровать"));
                                 e.setCancelled(false);
+                                return;
                             }
                         }
                         else{
