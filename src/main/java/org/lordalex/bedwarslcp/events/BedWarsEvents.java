@@ -1,6 +1,7 @@
 package org.lordalex.bedwarslcp.events;
 
 import org.bukkit.*;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -8,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -18,6 +20,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
 import org.lordalex.bedwarslcp.BedWarsLCP;
 import org.lordalex.bedwarslcp.utils.BedWarsUtil;
 import org.lordalex.bedwarslcp.utils.ColorUtil;
@@ -25,6 +28,8 @@ import org.lordalex.bedwarslcp.utils.YmlPaser;
 
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import static org.lordalex.bedwarslcp.BedWarsLCP.*;
@@ -32,6 +37,12 @@ import static org.lordalex.bedwarslcp.BedWarsLCP.*;
 
 public class BedWarsEvents implements Listener {
     private HashMap<UUID, String> userTeam;
+    private HashMap<String, String> COLOR_CODE = new HashMap<>();
+    private HashMap<String, String> COLOR_STRING = new HashMap<>();
+    HashMap<String, String> doubleBraceMap  = new HashMap<String, String>() {{
+        put("key1", "value1");
+        put("key2", "value2");
+    }};
 
     public BedWarsEvents() {
         userTeam = new HashMap<>();
@@ -102,6 +113,15 @@ public class BedWarsEvents implements Listener {
     }
     @EventHandler
     public void onTeamColorClick(InventoryClickEvent e){
+        COLOR_CODE.put("green", "&a");
+        COLOR_CODE.put("red", "&c");
+        COLOR_CODE.put("blue", "&9");
+        COLOR_CODE.put("yellow", "&e");
+
+        COLOR_STRING.put("green", "Зелёную");
+        COLOR_STRING.put("red", "Красную");
+        COLOR_STRING.put("blue", "Синюю");
+        COLOR_STRING.put("yellow", "Желтую");
         if(e == null) return;
         Player p = (Player) e.getView().getPlayer();
 
@@ -150,7 +170,9 @@ public class BedWarsEvents implements Listener {
                     int spawnIndex = (int) (Math.random() * mapConfig.getTeams().get(userTeam.get(p.getUniqueId())).getSpawns().size()-1);
                     Location location = BedWarsUtil.parseLocation(p.getWorld(), mapConfig.getTeams().get(userTeam.get(p.getUniqueId())).getSpawns().get(spawnIndex));
                     p.getInventory().removeItem(new ItemStack(Material.NAME_TAG, 1));
-                    p.setDisplayName(ChatColor.BLUE + p.getName());
+                    p.setDisplayName(ChatColor.BLUE + p.getDisplayName());
+                    p.setCustomName(ChatColor.BLUE + p.getName());
+                    p.setCustomNameVisible(true);
                     p.setPlayerListName(ChatColor.BLUE + p.getName());
                     p.teleport(location);
                     p.setBedSpawnLocation(location, true);
@@ -170,8 +192,7 @@ public class BedWarsEvents implements Listener {
                 if(loc.getBlock().getType() != Material.BED_BLOCK){
                     p.setGameMode(GameMode.SPECTATOR);
                     p.setDisplayName(p.getName());
-                    p.setPlayerListName(p.getName());
-                    p.setGameMode(GameMode.SPECTATOR);
+                    p.setPlayerListName(ChatColor.RESET + p.getName());
                     return;
                 }
             }
@@ -191,30 +212,25 @@ public class BedWarsEvents implements Listener {
             e.setCancelled(true);
         }
         Player p = e.getPlayer();
-        if(e.getBlock().getType()==Material.BED_BLOCK || e.getBlock().getType()==Material.BED){
-            e.getBlock().setType(Material.AIR);
+        if(e.getBlock().getType()==Material.BED_BLOCK){
             Location breakedLocation = e.getBlock().getLocation();
             for(String key : mapConfig.getTeams().keySet()){
                 for(String bedPos : mapConfig.getTeams().get(key).getBed()){
                     Location loc = BedWarsUtil.parseLocation(p.getWorld(), bedPos);
                     if(loc.equals(e.getBlock().getLocation())){
-                        loc.getBlock().setType(Material.AIR);
-                        for (Player player : e.getBlock().getWorld().getPlayers()) {
-                            HashMap<String, String> COLOR_CODE = new HashMap<>();
-                            HashMap<String, String> COLOR_STRING = new HashMap<>();
-                            COLOR_CODE.put("green", "&a");
-                            COLOR_CODE.put("red", "&c");
-                            COLOR_CODE.put("blue", "&9");
-                            COLOR_CODE.put("yellow", "&e");
-
-                            COLOR_STRING.put("green", "Зелёную");
-                            COLOR_STRING.put("red", "Красную");
-                            COLOR_STRING.put("blue", "Синюю");
-                            COLOR_STRING.put("yellow", "Желтую");
-                            //p.sendMessage("сломанный блок соответствует спавну кровати " + key);
-                            p.sendMessage(ColorUtil.getMessage("&fИгрок " + COLOR_CODE.get(userTeam.get(p.getUniqueId())) + p.getName()
-                                    + "&f разрушил " + COLOR_CODE.get(key) + COLOR_STRING.get(key) + " кровать"));
-                            return;
+                        if(!userTeam.get(p.getUniqueId()).equalsIgnoreCase(key)) {
+                            loc.getBlock().setType(Material.AIR);
+                            for (Player player : e.getBlock().getWorld().getPlayers()) {
+                                //p.sendMessage("сломанный блок соответствует спавну кровати " + key);
+                                e.getBlock().setType(Material.AIR);
+                                e.getBlock().getDrops().clear();
+                                p.sendMessage(ColorUtil.getMessage("&fИгрок " + COLOR_CODE.get(userTeam.get(p.getUniqueId())) + p.getName()
+                                        + "&f разрушил " + COLOR_CODE.get(key) + COLOR_STRING.get(key) + " кровать"));
+                                e.setCancelled(false);
+                            }
+                        }
+                        else{
+                            e.setCancelled(true);
                         }
                     }
                 }
@@ -227,7 +243,8 @@ public class BedWarsEvents implements Listener {
     {
         String killed = e.getEntity().getName();
         String killer = e.getEntity().getKiller().getName();
-        e.setDeathMessage("Игрок " + killed + " убит игроком " + killer);
+        e.setDeathMessage(ColorUtil.getMessage("Игрок " + COLOR_CODE.get(userTeam.get(e.getEntity().getUniqueId())) + killed
+                + "&f убит игроком " + COLOR_CODE.get(userTeam.get(e.getEntity().getKiller().getUniqueId())) + killer));
     }
 
     @EventHandler
@@ -240,6 +257,20 @@ public class BedWarsEvents implements Listener {
     public void onEntityDamage(EntityDamageEvent e){
         if(!isStarted){
             e.setCancelled(true);
+        }
+    }
+    @EventHandler
+    public void onDamage(EntityDamageByEntityEvent event) {
+
+        if(event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
+
+            Player damaged = ((Player) event.getEntity()).getPlayer();
+            Player damager = ((Player) event.getDamager()).getPlayer();
+            if(userTeam.get(damager.getUniqueId()) == userTeam.get(damaged.getUniqueId())){
+                event.setCancelled(true);
+            }
+
+
         }
     }
     private boolean isEqualsItem(InventoryClickEvent e, String itemDisplayName){
@@ -260,6 +291,51 @@ public class BedWarsEvents implements Listener {
 
     public void setUserTeam(HashMap<UUID, String> userTeam) {
         this.userTeam = userTeam;
+    }
+    @EventHandler()
+    public void onAsyncPlayerChatEvent(AsyncPlayerChatEvent e) {
+        Player player = e.getPlayer();
+        String pName = "";
+        String msg = e.getMessage();
+        if (msg == null)
+            return;
+
+        pName = ColorUtil.getMessage("&7[Игрок] " + player.getName() + ": &f");
+        if (player.getName().equals("_Lord_Alex_")){
+            pName = ColorUtil.getMessage("&3&l[Гл. админ] _Lord_Alex_&7: &a");
+        }
+        e.setFormat(pName + msg);
+
+        if(userTeam.containsKey(player.getUniqueId())){
+            if (msg.length() > 0 && msg.charAt(0) == '!'){
+                pName = ColorUtil.getMessage(COLOR_CODE.get(userTeam.get(player.getUniqueId())) + player.getName() + "&7: &f");
+                e.setFormat(pName + msg.substring(1));
+                return;
+            }
+            else{
+                for(Player p : player.getWorld().getPlayers()){
+                    if(userTeam.containsKey(p.getUniqueId()) && userTeam.get(player.getUniqueId()).equals(userTeam.get(p.getUniqueId()))){
+                        pName = ColorUtil.getMessage("&7[Игрок] " + player.getName() + ": &f");
+                        if (player.getName().equals("_Lord_Alex_")){
+                            pName = ColorUtil.getMessage("&3&l[Гл. админ] _Lord_Alex_&7: &a");
+                        }
+                        p.sendMessage(ColorUtil.getMessage(COLOR_CODE.get(userTeam.get(player.getUniqueId())) + "(Команда) " + pName + msg));
+                        e.setCancelled(true);
+                    }
+                }
+            }
+            //e.setFormat(pName + msg);
+        }
+//        else{
+//            e.setFormat(pName + msg);
+//            return;
+//        }
+
+
+//        if (!isStarted){
+//            e.setFormat(pName + msg);
+//        }
+
     }
 //    @EventHandler()
 //    public void onAsyncPlayerChatEvent(AsyncPlayerChatEvent event) {

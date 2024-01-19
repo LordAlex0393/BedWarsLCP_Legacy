@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
 
-import static jdk.xml.internal.SecuritySupport.getClassLoader;
+
 import static org.lordalex.bedwarslcp.BedWarsLCP.mapConfig;
 
 public class BedWarsUtil {

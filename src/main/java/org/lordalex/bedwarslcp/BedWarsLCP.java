@@ -78,6 +78,6 @@ public final class BedWarsLCP extends JavaPlugin {
         allowedToBreak.add(Material.ENDER_STONE);
         allowedToBreak.add(Material.GLOWSTONE);
         allowedToBreak.add(Material.IRON_BLOCK);
-        allowedToBreak.add(Material.BED_BLOCK);
+        //allowedToBreak.add(Material.BED_BLOCK);
     }
 }
