@@ -27,7 +27,19 @@ import static jdk.xml.internal.SecuritySupport.getClassLoader;
 import static org.lordalex.bedwarslcp.BedWarsLCP.mapConfig;
 
 public class BedWarsUtil {
-    //public static HashSet<UserTeam> USER_TEAM;
+//    public static HashMap<String, String> COLOR_CODE;
+//    public static HashMap<String, String> COLOR_STRING;
+//    static{
+//        COLOR_CODE.put("green", "&a");
+//        COLOR_CODE.put("red", "&c");
+//        COLOR_CODE.put("blue", "&9");
+//        COLOR_CODE.put("yellow", "&e");
+//
+//        COLOR_STRING.put("green", "Зелёную");
+//        COLOR_STRING.put("red", "Красную");
+//        COLOR_STRING.put("blue", "Синюю");
+//        COLOR_STRING.put("yellow", "Желтую");
+//    }
     public static void start(CommandSender sender){
         spawnVillagers(sender, mapConfig);
         new BukkitRunnable() {

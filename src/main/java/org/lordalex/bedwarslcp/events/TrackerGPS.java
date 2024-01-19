@@ -32,6 +32,7 @@ public class TrackerGPS implements Listener{
             int distance = (int) anotherPlayer.getLocation().distance(p.getLocation());
             p.sendMessage("Расстояние до игрока " + anotherPlayer.getName() + " " + distance + " блоков");
         }
+        p.sendMessage(p.getBedSpawnLocation() + "");
     }
     private static Player getNearestPlayerDistance(Player p){
         double minDistance = Double.MAX_VALUE;

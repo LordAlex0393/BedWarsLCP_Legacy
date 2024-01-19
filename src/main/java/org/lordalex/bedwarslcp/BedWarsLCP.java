@@ -35,23 +35,14 @@ public final class BedWarsLCP extends JavaPlugin {
 
         File file = new File("plugins\\BedWarsLCP\\MastebrConfig.yml");
         mapConfig = YmlPaser.parseMapConfig(file);
-
-        allowedToBreak = new HashSet<>();
-        allowedToBreak.add(Material.SANDSTONE);
-        allowedToBreak.add(Material.WEB);
-        allowedToBreak.add(Material.GLASS);
-        allowedToBreak.add(Material.SANDSTONE_STAIRS);
-        allowedToBreak.add(Material.ENDER_STONE);
-        allowedToBreak.add(Material.GLOWSTONE);
-        allowedToBreak.add(Material.IRON_BLOCK);
-
+        init();
 
         Bukkit.getPluginManager().registerEvents(new SavingPlatform(), this);
         Bukkit.getPluginManager().registerEvents(new TrackerGPS(), this);
         //Bukkit.getPluginManager().registerEvents(new TeleportationDust(), this);
         Bukkit.getPluginManager().registerEvents(new OpenTrader(), this);
         Bukkit.getPluginManager().registerEvents(new BedWarsEvents(), this);
-        Bukkit.getPluginManager().registerEvents(new onBlockBreak(), this);
+        //Bukkit.getPluginManager().registerEvents(new onBlockBreak(), this);
         getCommand("bw").setExecutor(new StartCommand());
         getCommand("kill").setExecutor(new KillCommand());
 
@@ -77,5 +68,16 @@ public final class BedWarsLCP extends JavaPlugin {
 
     public static Plugin getInstance(){
         return instance;
+    }
+    public static void init(){
+        allowedToBreak = new HashSet<>();
+        allowedToBreak.add(Material.SANDSTONE);
+        allowedToBreak.add(Material.WEB);
+        allowedToBreak.add(Material.GLASS);
+        allowedToBreak.add(Material.SANDSTONE_STAIRS);
+        allowedToBreak.add(Material.ENDER_STONE);
+        allowedToBreak.add(Material.GLOWSTONE);
+        allowedToBreak.add(Material.IRON_BLOCK);
+        allowedToBreak.add(Material.BED_BLOCK);
     }
 }

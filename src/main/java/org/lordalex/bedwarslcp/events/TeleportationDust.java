@@ -30,6 +30,7 @@ public class TeleportationDust implements Listener{
     public void onClick(PlayerInteractEvent e) {
         if(e.getItem() == null) return;
         Player p = e.getPlayer();
+
         if (!(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) return;
         if (!(e.getItem().getType() == Material.SULPHUR)) return;
         if (!cooldownsMap.containsKey(p.getUniqueId())
